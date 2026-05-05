@@ -1,6 +1,6 @@
 _This project has been created as part of the 42 curriculum by nofelten and acohaut._
 
-# cub3d
+# cub3D
 
 _nofelten & acohaut_  
 _(piscine of september's 2025 - 42 PARIS)_  
