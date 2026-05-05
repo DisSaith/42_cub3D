@@ -6,14 +6,19 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/04 18:10:15 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/05 16:30:31 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/*
+ *Free, destroy and close everything for no leaks before exit
+ */
 int	close_game(t_game *game)
 {
+	if (game->img.mlx_img)
+		mlx_destroy_image(game->mlx, game->img.mlx_img);
 	if (game->window)
 		mlx_destroy_window(game->mlx, game->window);
 	if (game->mlx)
@@ -24,35 +29,44 @@ int	close_game(t_game *game)
 	exit(0);
 }
 
+/*
+ *Initialize game struct and mlx struct for start the game
+ */
 int	initialisation_game(t_game *game)
 {
+	//int		w;
+	//int		h;
+
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		return (0);
-	game->window = mlx_new_window(game->mlx, 480, 480, "cub3D");
+	game->window = mlx_new_window(game->mlx,
+			WIDTH_WINDOW, HEIGHT_WINDOW, "cub3D");
 	if (!game->window)
 		return (0);
-	game->x_player = 60;
-	game->y_player = 65;
+	load_buffer(game);
+	/*game->img = mlx_xpm_file_to_image(game->mlx, "textures/wall.xpm", &w, &h);
+	if (!game->img)
+		return (0);*/
+	game->x_player = 200;
+	game->y_player = 200;
 	return (1);
 }
 
+/*
+ *Main function of the program
+ */
 int	main(int argc, char **argv)
 {
 	t_game	game;
-	void	*img;
-	int		w;
-	int		h;
 
 	(void)argc;
 	(void)argv;
 	get_game_ptr(&game);
 	if (!initialisation_game(&game))
 		close_game(&game);
-	img = mlx_xpm_file_to_image(game.mlx, "textures/wall.xpm", &w, &h);
-	mlx_put_image_to_window(game.mlx, game.window, img, 100, 100);
-	draw_a_line(&game, 45, 100);
-	mlx_key_hook(game.window, &handle_key, &game.mlx);
+	mlx_key_hook(game.window, &handle_key, &game);
+	mlx_loop_hook(game.mlx, &rendering, &game);
 	mlx_loop(game.mlx);
 	return (0);
 }

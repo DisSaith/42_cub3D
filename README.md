@@ -32,6 +32,8 @@ valgrind --leak-check=full --show-leak-kinds=all ./cub3D "map_name".cub
 
 ## Ressources  
 <ins>MinilibX</ins> : (https://harm-smits.github.io/42docs/libs/minilibx.html)   
+(https://www.youtube.com/watch?v=bYS93r6U0zg&t=3s)   
+(https://gontjarow.github.io/MiniLibX/)   
 <ins>cub3D guides</ins> :
 (https://hackmd.io/@nszl/H1LXByIE2)   
 (https://42-fran-byte-f94097.gitlab.io/docs/cub3d/cub3d-approach-en/#/)   
