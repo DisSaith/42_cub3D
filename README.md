@@ -7,58 +7,35 @@ _(piscine of september's 2025 - 42 PARIS)_
 
 
 <ins>starting date</ins> : 04/05/2026  
-<ins>last update</ins> : 04/05/2026  
+<ins>last update</ins> : 05/05/2026  
 
 
 ## Description  
-The shell is a command language interpreter.  
-Minishell is a project that teaches us (after Pipex) processes (parent and child), how to execute a command as a shell, redirect streams, parse inputs (similar as bash) etc..  
+Cub3D is the second graphic design project (after milestone 2's projects so_long, FdF and fractol) that enables us to improve our skills in window handling, colors, events etc.. with MiniLibX, the 42 school's graphical library.   
+Our goal is to make a dynamic 3D view inside a maze inspired by the Wolfenstein 3D game (from Id Software).
 
-We need to mimic the bash :  
-***lexer*** (tokenizer) > ***parser*** (syntax) > ***expander*** (env var) > ***redirection*** (pipe/fd) > ***executor***
-
-We need to handle signals (CTRL-C, CTRL-D, CTRL-\\) and built-in functions as well :  
-- echo (with flag -n)
-- cd
-- env
-- exit
-- unset
-- export
-- pwd
-
+Skills learning / improvement :
+- open and parse a file
+- graphic design
+- ray casting (algorithm for simulating 3 dimensions)
+- basic video game concepts
 
 ## Instructions  
 ***Usage***  
 1) make all
-2) ./minishell (no args)
-3) execute commands in our minishell
-
-***Examples***  
-*in minishell :*
-```bash
-> ls -la | grep "." | wc
-> < Makefile wc | cat > out
-> << EOF cat
-> echo "hi $USER, you're currently here : $PWD"
-> export NEWVAR=blabla (then again export to see the result)
-> unset NEWVAR
-> cd srcs/
-> echo -n hello >> out
-> echo $?
-> env
-> pwd
-```  
-
-***Check leaks***  
-valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./minishell
+2) ./cub3D "map_name".cub
+3) play with our game and try common requirements   
+   
+***Check leaks***   
+valgrind --leak-check=full --show-leak-kinds=all ./cub3D "map_name".cub   
 
 
 ## Ressources  
-<ins>Bash features</ins> :   
-(https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html)  
-(https://www.gnu.org/software/bash/manual/bash.html)  
-<ins>Fork()</ins> : (https://www.youtube.com/watch?v=PwxTbksJ2fo)  
-<ins>Open()</ins> : (https://www.codequoi.com/en/handling-a-file-by-its-descriptor-in-c/)  
-<ins>Signals</ins> : (https://www.geeksforgeeks.org/c/signals-c-language/)  
-<ins>Built-in functions</ins> : man pages (#RTFM)  
-<ins>Other ressources</ins> : Github and IA -> for researches and understanding concepts or examples usages for functions allowed by the subject  
+<ins>MinilibX</ins> : (https://harm-smits.github.io/42docs/libs/minilibx.html)   
+<ins>cub3D guides</ins> :
+(https://hackmd.io/@nszl/H1LXByIE2)   
+(https://42-fran-byte-f94097.gitlab.io/docs/cub3d/cub3d-approach-en/#/)   
+<ins>Ray casting</ins> :
+(https://lodev.org/cgtutor/raycasting.html)   
+(https://www.youtube.com/watch?v=G9i78WoBBIU)   
+<ins>Other ressources</ins> : Githubs and IA -> for researches and understanding concepts or examples usages for functions allowed by the subject 
