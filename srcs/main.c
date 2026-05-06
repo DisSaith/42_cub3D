@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/05 16:30:31 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/06 16:30:57 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@
  */
 int	close_game(t_game *game)
 {
-	if (game->img.mlx_img)
-		mlx_destroy_image(game->mlx, game->img.mlx_img);
+	if (game->buffer.mlx_img)
+		mlx_destroy_image(game->mlx, game->buffer.mlx_img);
+	if (game->wall.mlx_img)
+		mlx_destroy_image(game->mlx, game->wall.mlx_img);
+	if (game->enemy.mlx_img)
+		mlx_destroy_image(game->mlx, game->enemy.mlx_img);
 	if (game->window)
 		mlx_destroy_window(game->mlx, game->window);
 	if (game->mlx)
@@ -34,9 +38,6 @@ int	close_game(t_game *game)
  */
 int	initialisation_game(t_game *game)
 {
-	//int		w;
-	//int		h;
-
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		return (0);
@@ -45,11 +46,9 @@ int	initialisation_game(t_game *game)
 	if (!game->window)
 		return (0);
 	load_buffer(game);
-	/*game->img = mlx_xpm_file_to_image(game->mlx, "textures/wall.xpm", &w, &h);
-	if (!game->img)
-		return (0);*/
-	game->x_player = 200;
-	game->y_player = 200;
+	load_textures(game);
+	game->player.x = 200;
+	game->player.y = 200;
 	return (1);
 }
 

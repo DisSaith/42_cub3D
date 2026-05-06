@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/05 16:09:07 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/06 15:45:02 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../mlx_linux/mlx.h"
 # include <fcntl.h>
 # include <math.h>
+# include <stdio.h>
 
 # define W_KEY 119
 # define S_KEY 115
@@ -32,6 +33,7 @@
 # define GREEN 0x0000FF00
 # define RED 0x00FF0000
 # define BLUE 0x000000FF
+# define TRANSPARENT 0xFF000000
 
 typedef struct s_img
 {
@@ -40,15 +42,27 @@ typedef struct s_img
 	int		bits_per_pixels;
 	int		line_len;
 	int		endian;
+	int		width;
+	int		height;
+	int		x;
+	int		y;
 }			t_img;
+
+typedef struct s_player
+{
+	int		x;
+	int		y;
+	char	direction;
+}			t_player;
 
 typedef struct s_game
 {
-	t_img	img;
-	void	*mlx;
-	void	*window;
-	int		x_player;
-	int		y_player;
+	t_img		buffer;
+	t_img		wall;
+	t_img		enemy;
+	t_player	player;
+	void		*mlx;
+	void		*window;
 }			t_game;
 
 /**********main.c**********/
@@ -58,14 +72,18 @@ int main(int argc, char **argv);
 
 /**********utils_cub3d.c**********/
 t_game	*get_game_ptr(t_game *ptr);
-void	move_player(t_game *game, int dir_x, int dir_y);
+void	move_player(t_game *game, int dir_x, int dir_y, char direction);
 int		handle_key(int keycode, void *s_game_ptr);
 
 /**********test_mlx.c**********/
-void	draw_a_line(t_game *game, int x, int y);
-void	draw_background(t_game *game, int color);
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
-int		load_buffer(t_game *game);
-int		rendering(void);
+unsigned int	get_pixel_from_img(t_img *img, int x, int y);
+int				load_buffer(t_game *game);
+int				load_textures(t_game *game);
+int				load_xpm(t_game *game, t_img *img, char *path);
+int				rendering(void);
+void			draw_a_line(t_game *game, int x, int y);
+void			draw_background(t_game *game, int color);
+void			draw_sprite(t_game *game, t_img *sprite, int x, int y);
+void			my_mlx_pixel_put(t_img *img, int x, int y, unsigned int pixel);
 
 #endif
