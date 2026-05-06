@@ -6,7 +6,7 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 17:32:22 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/05 15:45:21 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/06 12:07:35 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,22 @@
 
 void	check_file_extension(char *filename)
 {
-	char	*file_extension;
-	size_t	i;
-	size_t	j;
+	size_t	len;
 
 	if (!filename || !filename[0])
 		error_exit("Invalid map file name");
-	i = ft_strlen(filename + 1);
-	j = 3;
-	file_extension = malloc(sizeof(char *) * 5);
-	file_extension[0] = '.';
-	file_extension[1] = 'c';
-	file_extension[2] = 'u';
-	file_extension[3] = 'b';
-	file_extension[4] = '\0';
-	while (j > 0)
+	len = ft_strlen(filename);
+	if (len < 5 || ft_strncmp(filename + len - 4, ".cub", 4) != 0)
 	{
-		if (filename[i] != file_extension[j])
-		{
-			free(file_extension);
-			error_exit("Invalid map file extension");
-		}
-		i--;
-		j--;
+		error_exit("Invalid map file extension");
 	}
-	free(file_extension);
 }
 
-void	check_file_existence(char *filename)
+void	check_file_existence(t_map *map, char *filename)
 {
-	int	fd;
 
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
+	map->fd = open(filename, O_RDONLY);
+	if (map->fd == -1)
 		error_exit("file not found!");
 }
 
@@ -55,26 +38,47 @@ void	get_map_height()
 {
 
 }
-
+*/
+/*
 void	get_map_width()
 {
 
 }
+*/
 
-void	converte_map_to_tab(char *filename)
+void	convert_map_to_tab(int fd)
 {
-	
+	char	*line;
+
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("%s", line);
+		free(line);
+	}
 }
 
+/*
 void	check_map_content(char **map)
 {
 
 }
 */
-int	main(int argc, char **argv)
+void	init_map(t_map *map)
 {
-	(void)argc;
-	check_file_extension(argv[1]);
-	check_file_existence(argv[1]);
+	map->height = 0;
+	map->width = 0;
+	map->fd = 0;
+}
+
+int	check_map(int argc, char *filename)
+{
+	t_map	map;
+
+	if (argc != 2)
+		error_exit("Invalid arguments");
+	check_file_extension(filename);
+	init_map(&map);
+	check_file_existence(&map, filename);
+	converte_map_to_tab(map.fd);
 	return (0);
 }

@@ -6,12 +6,12 @@
 #    By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/28 17:01:03 by acohaut           #+#    #+#              #
-#    Updated: 2026/05/04 18:09:28 by acohaut          ###   ########.fr        #
+#    Updated: 2026/05/05 17:24:59 by nofelten         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CC		= cc
+CFLAGS		= -Wall -Wextra -Werror -g
 NAME		= cub3D
 INCLUDES	= -I includes -I./libft
 
@@ -20,6 +20,8 @@ LIBFT		= libft/libft.a
 SRCS		= 	srcs/main.c \
 				srcs/utils_cub3d.c \
 				srcs/test_mlx.c \
+				srcs/error.c \
+				srcs/parsing.c \
 
 OBJS		= $(SRCS:srcs/%.c=objs/%.o)
 

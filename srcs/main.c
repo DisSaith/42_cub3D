@@ -44,8 +44,7 @@ int	main(int argc, char **argv)
 	int		w;
 	int		h;
 
-	(void)argc;
-	(void)argv;
+	check_map(argc, argv[1]);
 	get_game_ptr(&game);
 	if (!initialisation_game(&game))
 		close_game(&game);
