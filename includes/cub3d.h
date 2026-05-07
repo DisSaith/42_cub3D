@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/06 15:45:02 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/07 11:06:50 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
+# include <unistd.h>
 
 # define W_KEY 119
 # define S_KEY 115
@@ -65,10 +66,27 @@ typedef struct s_game
 	void		*window;
 }			t_game;
 
+typedef struct s_map
+{
+	size_t		height;
+	size_t		width;
+	int		fd;
+}			t_map;
+
+/************error.c**************/
+void	error_exit(char *error_message);
+
 /**********main.c**********/
 int	close_game(t_game *game);
 int	initialisation_game(t_game *game);
-int main(int argc, char **argv);
+int	main(int argc, char **argv);
+
+/**********parsing.c***********/
+void	check_file_extension(char *filename);
+void	check_file_existence(t_map *map, char *filename);
+void    convert_file_to_tab(t_map *map, int fd);
+void    init_map(t_map *map);
+int     check_map(int argc, char *filename);
 
 /**********utils_cub3d.c**********/
 t_game	*get_game_ptr(t_game *ptr);

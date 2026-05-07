@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/06 16:30:57 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/07 11:08:06 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ int	close_game(t_game *game)
 	if (game->enemy.mlx_img)
 		mlx_destroy_image(game->mlx, game->enemy.mlx_img);
 	if (game->window)
+	{
 		mlx_destroy_window(game->mlx, game->window);
+		game->window = NULL;
+	}
 	if (game->mlx)
 	{
 		mlx_destroy_display(game->mlx);
@@ -59,8 +62,8 @@ int	main(int argc, char **argv)
 {
 	t_game	game;
 
-	(void)argc;
-	(void)argv;
+	ft_memset(&game, 0, sizeof(t_game));
+	check_map(argc, argv[1]);
 	get_game_ptr(&game);
 	if (!initialisation_game(&game))
 		close_game(&game);
