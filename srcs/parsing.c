@@ -6,7 +6,7 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 17:32:22 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/07 10:59:04 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/07 13:26:03 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	check_file_extension(char *filename)
 
 void	check_file_existence(t_map *map, char *filename)
 {
-
 	map->fd = open(filename, O_RDONLY);
 	if (map->fd == -1)
 		error_exit("file not found!");

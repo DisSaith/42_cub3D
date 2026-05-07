@@ -6,7 +6,7 @@
 #    By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/28 17:01:03 by acohaut           #+#    #+#              #
-#    Updated: 2026/05/05 17:24:59 by nofelten         ###   ########.fr        #
+#    Updated: 2026/05/07 13:09:58 by acohaut          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,9 @@ INCLUDES	= -I includes -I./libft
 LIBFT		= libft/libft.a
 
 SRCS		= 	srcs/main.c \
+				srcs/rendering.c \
+				srcs/load_textures.c \
+				srcs/key_manager.c \
 				srcs/utils_cub3d.c \
 				srcs/test_mlx.c \
 				srcs/error.c \

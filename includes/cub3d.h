@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/07 11:06:50 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/07 13:31:04 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,13 @@ typedef struct s_img
 
 typedef struct s_player
 {
-	int		x;
-	int		y;
+	float	x;
+	float	y;
 	char	direction;
+	bool	w_press;
+	bool	s_press;
+	bool	d_press;
+	bool	a_press;
 }			t_player;
 
 typedef struct s_game
@@ -70,38 +74,46 @@ typedef struct s_map
 {
 	size_t		height;
 	size_t		width;
-	int		fd;
+	int			fd;
 }			t_map;
 
 /************error.c**************/
-void	error_exit(char *error_message);
+void			error_exit(char *error_message);
 
 /**********main.c**********/
-int	close_game(t_game *game);
-int	initialisation_game(t_game *game);
-int	main(int argc, char **argv);
+int				close_game(t_game *game);
+int				initialisation_game(t_game *game);
+void			init_player(t_game *game);
+int				main(int argc, char **argv);
 
 /**********parsing.c***********/
-void	check_file_extension(char *filename);
-void	check_file_existence(t_map *map, char *filename);
-void    convert_file_to_tab(t_map *map, int fd);
-void    init_map(t_map *map);
-int     check_map(int argc, char *filename);
+void			check_file_extension(char *filename);
+void			check_file_existence(t_map *map, char *filename);
+void			convert_file_to_tab(t_map *map, int fd);
+void			init_map(t_map *map);
+int				check_map(int argc, char *filename);
 
 /**********utils_cub3d.c**********/
-t_game	*get_game_ptr(t_game *ptr);
-void	move_player(t_game *game, int dir_x, int dir_y, char direction);
-int		handle_key(int keycode, void *s_game_ptr);
+t_game			*get_game_ptr(t_game *ptr);
 
-/**********test_mlx.c**********/
+/**********key_manager.c**********/
+int				key_press(int keycode, t_game *game);
+int				key_release(int keycode, t_game *game);
+void			move_player(t_game *game);
+
+/**********rendering.c**********/
 unsigned int	get_pixel_from_img(t_img *img, int x, int y);
+void			my_mlx_pixel_put(t_img *img, int x, int y, unsigned int pixel);
+void			draw_sprite(t_game *game, t_img *sprite, int x, int y);
+int				rendering(t_game *game);
+
+/**********load_textures.c**********/
 int				load_buffer(t_game *game);
 int				load_textures(t_game *game);
 int				load_xpm(t_game *game, t_img *img, char *path);
-int				rendering(void);
+
+/**********test_mlx.c**********/
 void			draw_a_line(t_game *game, int x, int y);
 void			draw_background(t_game *game, int color);
-void			draw_sprite(t_game *game, t_img *sprite, int x, int y);
-void			my_mlx_pixel_put(t_img *img, int x, int y, unsigned int pixel);
 
 #endif

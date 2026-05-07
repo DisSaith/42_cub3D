@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/07 11:08:06 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/07 13:27:32 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,20 @@ int	close_game(t_game *game)
 }
 
 /*
+ *Initialize player struct position and direction
+ */
+void	init_player(t_game *game)
+{
+	game->player.x = 200;
+	game->player.y = 200;
+	game->player.w_press = false;
+	game->player.s_press = false;
+	game->player.d_press = false;
+	game->player.a_press = false;
+	game->player.direction = 0;
+}
+
+/*
  *Initialize game struct and mlx struct for start the game
  */
 int	initialisation_game(t_game *game)
@@ -48,10 +62,11 @@ int	initialisation_game(t_game *game)
 			WIDTH_WINDOW, HEIGHT_WINDOW, "cub3D");
 	if (!game->window)
 		return (0);
-	load_buffer(game);
-	load_textures(game);
-	game->player.x = 200;
-	game->player.y = 200;
+	init_player(game);
+	if (!load_buffer(game))
+		return (0);
+	if (!load_textures(game))
+		return (0);
 	return (1);
 }
 
@@ -67,8 +82,10 @@ int	main(int argc, char **argv)
 	get_game_ptr(&game);
 	if (!initialisation_game(&game))
 		close_game(&game);
-	mlx_key_hook(game.window, &handle_key, &game);
-	mlx_loop_hook(game.mlx, &rendering, &game);
+	mlx_hook(game.window, 2, 1 << 0, (int (*)())(void *)key_press, &game);
+	mlx_hook(game.window, 3, 1 << 1, (int (*)())(void *)key_release, &game);
+	mlx_hook(game.window, 17, 1 << 0, (int (*)())(void *)close_game, &game);
+	mlx_loop_hook(game.mlx, (int (*)())(void *)rendering, &game);
 	mlx_loop(game.mlx);
 	return (0);
 }
