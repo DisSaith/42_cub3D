@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/05 16:42:37 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/06 17:41:32 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv);
 /**********parsing.c***********/
 void	check_file_extension(char *filename);
 void	check_file_existence(t_map *map, char *filename);
-void    converte_map_to_tab(int fd);
+void    convert_file_to_tab(t_map *map, int fd);
 void    init_map(t_map *map);
 int     check_map(int argc, char *filename);
 
