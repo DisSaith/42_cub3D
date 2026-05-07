@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/07 13:31:04 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/07 16:30:46 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # define D_KEY 100
 # define A_KEY 97
 # define ESC_KEY 65307
+# define LEFT_KEY 65361
+# define RIGHT_KEY 65367
 
 # define TILE_SIZE 8
 
@@ -51,8 +53,8 @@ typedef struct s_img
 
 typedef struct s_player
 {
-	float	x;
-	float	y;
+	double	x;
+	double	y;
 	char	direction;
 	bool	w_press;
 	bool	s_press;
@@ -99,6 +101,7 @@ t_game			*get_game_ptr(t_game *ptr);
 /**********key_manager.c**********/
 int				key_press(int keycode, t_game *game);
 int				key_release(int keycode, t_game *game);
+int				check_collision(t_game *game, float speed);
 void			move_player(t_game *game);
 
 /**********rendering.c**********/

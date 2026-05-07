@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/07 13:29:53 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/07 16:48:12 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
  *
  * int	key_press(int keycode, t_game *game);
  * int	key_release(int keycode, t_game *game);
+ * int	check_collision(t_game *game, float speed)
  * void	move_player(t_game *game);
  */
 
@@ -56,29 +57,55 @@ int	key_release(int keycode, t_game *game)
 }
 
 /*
+ * Prevent collision with walls and map limits
+ */
+int	check_collision(t_game *game, float speed)
+{
+	double	new_x;
+	double	new_y;
+
+	new_x = game->player.x;
+	new_y = game->player.y;
+	if (game->player.w_press == true)
+		new_y -= speed;
+	if (game->player.s_press == true)
+		new_y += speed;
+	if (game->player.d_press == true)
+		new_x += speed;
+	if (game->player.a_press == true)
+		new_x -= speed;
+	if (new_x < 0 || new_y < 0
+		|| new_x > (double)WIDTH_WINDOW || new_y > (double)HEIGHT_WINDOW)
+		return (0);
+	return (1);
+}
+
+/*
  *Allow us to move the player after pressing the keyboard (W,S,D,A)
  */
 void	move_player(t_game *game)
 {
-	float	speed;
+	double	speed;
 
 	speed = 0.5;
-	if (game->player.w_press)
+	if (!check_collision(game, speed))
+		return ;
+	if (game->player.w_press == true)
 	{
 		game->player.y -= speed;
 		game->player.direction = 'N';
 	}
-	if (game->player.s_press)
+	if (game->player.s_press == true)
 	{
 		game->player.y += speed;
 		game->player.direction = 'S';
 	}
-	if (game->player.d_press)
+	if (game->player.d_press == true)
 	{
 		game->player.x += speed;
 		game->player.direction = 'E';
 	}
-	if (game->player.a_press)
+	if (game->player.a_press == true)
 	{
 		game->player.x -= speed;
 		game->player.direction = 'W';

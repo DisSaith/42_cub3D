@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/07 13:10:54 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/07 16:32:26 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,14 @@ int	rendering(t_game *game)
 {
 	int		x_line;
 	int		y_line;
-	int		vector_pw;
+	double	vector_pw;
 
 	x_line = game->wall.x + (game->wall.width / 2);
 	y_line = game->wall.y + (game->wall.height / 2);
 	vector_pw = sqrt((game->player.x - x_line) * (game->player.x - x_line)
 			+ (game->player.y - y_line) * (game->player.y - y_line));
-	printf("vector_pw = %d\n", vector_pw);
-	ft_bzero(game->buffer.addr, game->buffer.width * game->buffer.height * 4);
+	printf("vector_pw = %f\n", vector_pw);
+	ft_bzero(game->buffer.addr, (game->buffer.width * game->buffer.height) * 4);
 	draw_background(game, BLUE);
 	move_player(game);
 	draw_sprite(game, &game->wall, game->wall.x, game->wall.y);
