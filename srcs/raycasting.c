@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/11 13:15:34 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/11 17:04:13 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/11 17:30:22 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
  *	[FILE DESCRIPTION]
  * Function needed for raycasting :
- *
+ * t
  */
 
 int	raycasting(t_game *game)
