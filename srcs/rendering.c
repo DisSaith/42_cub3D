@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/07 16:32:26 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/11 12:12:15 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,30 @@ int	rendering(t_game *game)
 {
 	int		x_line;
 	int		y_line;
-	double	vector_pw;
+	//double	vector_pw;
 
 	x_line = game->wall.x + (game->wall.width / 2);
 	y_line = game->wall.y + (game->wall.height / 2);
-	vector_pw = sqrt((game->player.x - x_line) * (game->player.x - x_line)
-			+ (game->player.y - y_line) * (game->player.y - y_line));
-	printf("vector_pw = %f\n", vector_pw);
+	//vector_pw = sqrt((game->player.x - x_line) * (game->player.x - x_line)
+	//		+ (game->player.y - y_line) * (game->player.y - y_line));
+	//printf("vector_pw = %f\n", vector_pw);
 	ft_bzero(game->buffer.addr, (game->buffer.width * game->buffer.height) * 4);
 	draw_background(game, BLUE);
 	move_player(game);
-	draw_sprite(game, &game->wall, game->wall.x, game->wall.y);
+	for(size_t y = 0 ; y < game->map.height ; y++)
+	{
+		for(size_t x = 0 ; x < game->map.width ; x++)
+		{
+			if (game->map.map[y][x] == 1)
+				draw_sprite(game, &game->wall, x * 64, y * 64);
+		}
+	}
+	//draw_sprite(game, &game->wall, game->wall.x, game->wall.y);
 	draw_sprite(game, &game->enemy, 100, 100);
 	draw_a_line(game, x_line, y_line);
 	mlx_put_image_to_window(game->mlx, game->window,
 		game->buffer.mlx_img, 0, 0);
 	mlx_string_put(game->mlx, game->window,
-		game->player.x, game->player.y, GREEN, "p");
+		game->player.pos_x, game->player.pos_y, GREEN, "p");
 	return (0);
 }

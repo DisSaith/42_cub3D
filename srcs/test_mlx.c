@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/07 13:22:18 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/11 12:13:06 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ void	draw_a_line(t_game *game, int x, int y)
 	double			pixel_y;
 	unsigned int	pixels;
 
-	delta_x = x - game->player.x;
-	delta_y = y - game->player.y;
+	delta_x = x - game->player.pos_x;
+	delta_y = y - game->player.pos_y;
 	pixels = sqrt((delta_x * delta_x) + (delta_y * delta_y));
-	pixel_x = game->player.x;
-	pixel_y = game->player.y;
+	pixel_x = game->player.pos_x;
+	pixel_y = game->player.pos_y;
 	delta_x /= pixels;
 	delta_y /= pixels;
 	while (pixels > 0)

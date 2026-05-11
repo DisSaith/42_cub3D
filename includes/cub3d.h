@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/07 16:30:46 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/11 17:04:22 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 
 # define TILE_SIZE 8
 
-# define WIDTH_WINDOW 480
-# define HEIGHT_WINDOW 480
+# define WIDTH_WINDOW 640
+# define HEIGHT_WINDOW 640
 
 # define GREEN 0x0000FF00
 # define RED 0x00FF0000
@@ -51,16 +51,55 @@ typedef struct s_img
 	int		y;
 }			t_img;
 
+typedef struct s_raycasting
+{
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plan_x;
+	double	plan_y;
+	double	raydir_x;
+	double	raydir_y;
+	double	camera_x;
+	double	sidedist_x;
+	double	sidedist_y;
+	double	deltadist_x;
+	double	deltadist_y;
+	double	walldist;
+	int		map_x;
+	int		map_y;
+	int		step_x;
+	int		step_y;
+	int		hit;
+	int		side;
+	int		lineheight;
+	int		drawstart;
+	int		drawend;
+	int		x;
+}			t_raycasting;
+
 typedef struct s_player
 {
-	double	x;
-	double	y;
-	char	direction;
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plan_x;
+	double	plan_y;
 	bool	w_press;
 	bool	s_press;
 	bool	d_press;
 	bool	a_press;
 }			t_player;
+
+typedef struct s_map
+{
+	int			**map;
+	size_t		height;
+	size_t		width;
+	int			fd;
+}			t_map;
 
 typedef struct s_game
 {
@@ -68,22 +107,19 @@ typedef struct s_game
 	t_img		wall;
 	t_img		enemy;
 	t_player	player;
+	t_map		map;
 	void		*mlx;
 	void		*window;
+	double		cur_time;
+	double		old_time;
 }			t_game;
-
-typedef struct s_map
-{
-	size_t		height;
-	size_t		width;
-	int			fd;
-}			t_map;
 
 /************error.c**************/
 void			error_exit(char *error_message);
 
 /**********main.c**********/
 int				close_game(t_game *game);
+int				initialize_map(t_game *game);
 int				initialisation_game(t_game *game);
 void			init_player(t_game *game);
 int				main(int argc, char **argv);
@@ -118,5 +154,8 @@ int				load_xpm(t_game *game, t_img *img, char *path);
 /**********test_mlx.c**********/
 void			draw_a_line(t_game *game, int x, int y);
 void			draw_background(t_game *game, int color);
+
+/**********test_mlx.c**********/
+int				raycasting(t_game *game);
 
 #endif

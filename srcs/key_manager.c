@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/07 16:48:12 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/11 12:12:30 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ int	check_collision(t_game *game, float speed)
 	double	new_x;
 	double	new_y;
 
-	new_x = game->player.x;
-	new_y = game->player.y;
+	new_x = game->player.pos_x;
+	new_y = game->player.pos_y;
 	if (game->player.w_press == true)
 		new_y -= speed;
 	if (game->player.s_press == true)
@@ -75,7 +75,8 @@ int	check_collision(t_game *game, float speed)
 	if (game->player.a_press == true)
 		new_x -= speed;
 	if (new_x < 0 || new_y < 0
-		|| new_x > (double)WIDTH_WINDOW || new_y > (double)HEIGHT_WINDOW)
+		|| new_x > (double)WIDTH_WINDOW || new_y > (double)HEIGHT_WINDOW
+		|| game->map.map[(int)new_y / 64][(int)new_x / 64] == 1)
 		return (0);
 	return (1);
 }
@@ -92,22 +93,22 @@ void	move_player(t_game *game)
 		return ;
 	if (game->player.w_press == true)
 	{
-		game->player.y -= speed;
-		game->player.direction = 'N';
+		game->player.pos_y -= speed;
+		game->player.dir_y = -1;
 	}
 	if (game->player.s_press == true)
 	{
-		game->player.y += speed;
-		game->player.direction = 'S';
+		game->player.pos_y += speed;
+		game->player.dir_y = 1;
 	}
 	if (game->player.d_press == true)
 	{
-		game->player.x += speed;
-		game->player.direction = 'E';
+		game->player.pos_x += speed;
+		game->player.dir_x = 1;
 	}
 	if (game->player.a_press == true)
 	{
-		game->player.x -= speed;
-		game->player.direction = 'W';
+		game->player.pos_x -= speed;
+		game->player.dir_x = -1;
 	}
 }
