@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/12 16:37:17 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/12 16:45:47 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ typedef struct s_game
 	double		old_time;
 }			t_game;
 
-typedef struct s_map
+typedef struct s_file
 {
 	char		*filename;
 	char		**file_content;
@@ -138,7 +138,7 @@ typedef struct s_map
 	size_t		floor;
 	size_t		ceiling;
 	int		fd;
-}			t_map;
+}			t_file;
 
 /************error.c**************/
 void			error_exit(char *error_message);
@@ -152,16 +152,17 @@ int				main(int argc, char **argv);
 
 /**********parsing.c***********/
 void	check_file_extension(char *filename);
-void	check_file_existence(t_map *map);
-void    convert_file_to_tab(t_map *map);
-void    get_map_height(t_map *map);
-void    check_map_content(t_map *map);
-void    check_element(t_map *map, size_t i);
-void    init_map(t_map *map, char *filename);
+void	check_file_existence(t_file *file);
+void    convert_file_to_tab(t_file *file);
+void    convert_map_to_tab(t_file *file, size_t height);
+void    get_file_height(t_file *file);
+void    check_map_content(t_file *file);
+void    check_element(t_file *file, size_t i);
+void    init_file(t_file *file, char *filename);
 int     check_map(int argc, char *filename);
-int	element_find(t_map *map);
+int	element_find(t_file *file);
 size_t     skip_space(char *str);
-size_t     skip_empty_line(t_map *map, size_t i);
+size_t     skip_empty_line(t_file *file, size_t i);
 
 /**********utils_cub3d.c**********/
 t_game			*get_game_ptr(t_game *ptr);
