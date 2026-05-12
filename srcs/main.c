@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/11 17:04:35 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/12 16:32:01 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,19 @@ int	close_game(t_game *game)
  */
 void	init_player(t_game *game)
 {
-	game->player.pos_x = 200;
-	game->player.pos_y = 200;
-	game->player.dir_x = -1;
-	game->player.dir_y = 0;
-	game->player.plan_x = 0;
-	game->player.plan_y = 0.66;
+	game->player.pos_x = 8 * 64;
+	game->player.pos_y = 8 * 64;
+	game->player.dir_x = 0;
+	game->player.dir_y = -1;
+	game->player.plan_x = 0.66;
+	game->player.plan_y = 0;
+	game->player.angle = PI / 2;
 	game->player.w_press = false;
 	game->player.s_press = false;
 	game->player.d_press = false;
 	game->player.a_press = false;
+	game->player.right_press = false;
+	game->player.left_press = false;
 }
 
 /*
@@ -63,8 +66,8 @@ int	initialize_map(t_game *game)
 		{1,0,0,0,0,0,0,0,0,1},
 		{1,0,0,0,0,0,0,0,0,1},
 		{1,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,1,0,0,0,0,1},
+		{1,0,0,0,1,0,0,0,0,1},
 		{1,0,0,0,0,0,0,0,0,1},
 		{1,0,0,0,0,0,0,0,0,1},
 		{1,0,0,0,0,0,0,0,0,1},
@@ -105,7 +108,6 @@ int	initialisation_game(t_game *game)
 	initialize_map(game);
 	game->cur_time = 0;
 	game->old_time = 0;
-	raycasting(game);
 	return (1);
 }
 

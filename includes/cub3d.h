@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/11 17:04:22 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/12 16:30:10 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,24 @@
 # define A_KEY 97
 # define ESC_KEY 65307
 # define LEFT_KEY 65361
-# define RIGHT_KEY 65367
+# define RIGHT_KEY 65363
 
-# define TILE_SIZE 8
+# define TILE_SIZE 64
 
 # define WIDTH_WINDOW 640
 # define HEIGHT_WINDOW 640
+
+# define PI 3.14159265359
 
 # define GREEN 0x0000FF00
 # define RED 0x00FF0000
 # define BLUE 0x000000FF
 # define TRANSPARENT 0xFF000000
+
+# define CEILING_COLOR  0x00383838
+# define FLOOR_COLOR    0x00787060
+# define WALL_NS_COLOR  0x00CCCCCC
+# define WALL_EW_COLOR  0x00888888
 
 typedef struct s_img
 {
@@ -87,10 +94,13 @@ typedef struct s_player
 	double	dir_y;
 	double	plan_x;
 	double	plan_y;
+	double	angle;
 	bool	w_press;
 	bool	s_press;
 	bool	d_press;
 	bool	a_press;
+	bool	right_press;
+	bool	left_press;
 }			t_player;
 
 typedef struct s_map
@@ -137,13 +147,15 @@ t_game			*get_game_ptr(t_game *ptr);
 /**********key_manager.c**********/
 int				key_press(int keycode, t_game *game);
 int				key_release(int keycode, t_game *game);
-int				check_collision(t_game *game, float speed);
+int				check_collision_x(t_game *game, double dx);
+int				check_collision_y(t_game *game, double dy);
 void			move_player(t_game *game);
 
 /**********rendering.c**********/
 unsigned int	get_pixel_from_img(t_img *img, int x, int y);
 void			my_mlx_pixel_put(t_img *img, int x, int y, unsigned int pixel);
 void			draw_sprite(t_game *game, t_img *sprite, int x, int y);
+void			draw_column(t_game *game, t_raycasting *ray, int x);
 int				rendering(t_game *game);
 
 /**********load_textures.c**********/
@@ -154,8 +166,12 @@ int				load_xpm(t_game *game, t_img *img, char *path);
 /**********test_mlx.c**********/
 void			draw_a_line(t_game *game, int x, int y);
 void			draw_background(t_game *game, int color);
+int				touch(t_game *game, double x, double y);
+int				check_collision_2d(t_game *game, float speed);
+void			move_player_2d(t_game *game);
+int				rendering_2d(t_game *game);
 
-/**********test_mlx.c**********/
+/**********raycasting.c**********/
 int				raycasting(t_game *game);
 
 #endif
