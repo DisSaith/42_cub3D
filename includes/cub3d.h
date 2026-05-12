@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/07 11:06:50 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/07 14:01:07 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,17 @@ typedef struct s_game
 
 typedef struct s_map
 {
+	char		*filename;
+	char		**file_content;
+	char		**map;
 	size_t		height;
 	size_t		width;
+	size_t		north;
+	size_t		south;
+	size_t		east;
+	size_t		west;
+	size_t		floor;
+	size_t		ceiling;
 	int		fd;
 }			t_map;
 
@@ -83,10 +92,16 @@ int	main(int argc, char **argv);
 
 /**********parsing.c***********/
 void	check_file_extension(char *filename);
-void	check_file_existence(t_map *map, char *filename);
-void    convert_file_to_tab(t_map *map, int fd);
-void    init_map(t_map *map);
+void	check_file_existence(t_map *map);
+void    convert_file_to_tab(t_map *map);
+void    get_map_height(t_map *map);
+void    check_map_content(t_map *map);
+void    check_element(t_map *map, size_t i);
+void    init_map(t_map *map, char *filename);
 int     check_map(int argc, char *filename);
+int	element_find(t_map *map);
+size_t     skip_space(char *str);
+size_t     skip_empty_line(t_map *map, size_t i);
 
 /**********utils_cub3d.c**********/
 t_game	*get_game_ptr(t_game *ptr);
