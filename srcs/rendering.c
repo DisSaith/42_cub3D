@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/07 16:32:26 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/12 16:30:48 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,29 +72,45 @@ void	draw_sprite(t_game *game, t_img *sprite, int pos_x, int pos_y)
 	}
 }
 
+void	draw_column(t_game *game, t_raycasting *ray, int x)
+{
+	unsigned int	wall_color;
+	int				y;
+
+	/* --- PLAFOND : du haut de l'écran jusqu'au début du mur --- */
+	y = 0;
+	while (y < ray->drawstart)
+	{
+		my_mlx_pixel_put(&game->buffer, x, y, CEILING_COLOR);
+		y++;
+	}
+	/* --- MUR : de drawstart à drawend --- */
+	if (ray->side == 0)
+		wall_color = WALL_NS_COLOR; /* face E/W : plus claire */
+	else
+		wall_color = WALL_EW_COLOR; /* face N/S : plus sombre */
+	while (y <= ray->drawend)
+	{
+		my_mlx_pixel_put(&game->buffer, x, y, wall_color);
+		y++;
+	}
+	/* --- SOL : du bas du mur jusqu'en bas de l'écran --- */
+	while (y < HEIGHT_WINDOW)
+	{
+		my_mlx_pixel_put(&game->buffer, x, y, FLOOR_COLOR);
+		y++;
+	}
+}
+
 /*
  * Rendering each frame (associate with mlx_loop_hook)
  */
 int	rendering(t_game *game)
 {
-	int		x_line;
-	int		y_line;
-	double	vector_pw;
-
-	x_line = game->wall.x + (game->wall.width / 2);
-	y_line = game->wall.y + (game->wall.height / 2);
-	vector_pw = sqrt((game->player.x - x_line) * (game->player.x - x_line)
-			+ (game->player.y - y_line) * (game->player.y - y_line));
-	printf("vector_pw = %f\n", vector_pw);
 	ft_bzero(game->buffer.addr, (game->buffer.width * game->buffer.height) * 4);
-	draw_background(game, BLUE);
 	move_player(game);
-	draw_sprite(game, &game->wall, game->wall.x, game->wall.y);
-	draw_sprite(game, &game->enemy, 100, 100);
-	draw_a_line(game, x_line, y_line);
+	raycasting(game);
 	mlx_put_image_to_window(game->mlx, game->window,
 		game->buffer.mlx_img, 0, 0);
-	mlx_string_put(game->mlx, game->window,
-		game->player.x, game->player.y, GREEN, "p");
 	return (0);
 }

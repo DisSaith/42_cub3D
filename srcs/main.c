@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/07 13:27:32 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/12 16:32:01 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,51 @@ int	close_game(t_game *game)
  */
 void	init_player(t_game *game)
 {
-	game->player.x = 200;
-	game->player.y = 200;
+	game->player.pos_x = 8 * 64;
+	game->player.pos_y = 8 * 64;
+	game->player.dir_x = 0;
+	game->player.dir_y = -1;
+	game->player.plan_x = 0.66;
+	game->player.plan_y = 0;
+	game->player.angle = PI / 2;
 	game->player.w_press = false;
 	game->player.s_press = false;
 	game->player.d_press = false;
 	game->player.a_press = false;
-	game->player.direction = 0;
+	game->player.right_press = false;
+	game->player.left_press = false;
+}
+
+/*
+ *Tempory function to create a map
+ */
+int	initialize_map(t_game *game)
+{
+	int	maptmp[10][10] = {
+		{1,1,1,1,1,1,1,1,1,1},
+		{1,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,1,0,0,0,0,1},
+		{1,0,0,0,1,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,1},
+		{1,1,1,1,1,1,1,1,1,1}
+	};
+	game->map.width = 10;
+	game->map.height = 10;
+	game->map.map = malloc(sizeof(int *) * game->map.height);
+	if (!game->map.map)
+		return (0);
+	for (size_t i = 0 ; i < game->map.height ; i++)
+	{
+		game->map.map[i] = malloc(sizeof(int) * game->map.width);
+		if (!game->map.map[i])
+			return (0);
+		ft_memcpy(game->map.map[i], maptmp[i], sizeof(int) * game->map.width);
+	}
+	return (1);
 }
 
 /*
@@ -62,11 +100,14 @@ int	initialisation_game(t_game *game)
 			WIDTH_WINDOW, HEIGHT_WINDOW, "cub3D");
 	if (!game->window)
 		return (0);
-	init_player(game);
 	if (!load_buffer(game))
 		return (0);
 	if (!load_textures(game))
 		return (0);
+	init_player(game);
+	initialize_map(game);
+	game->cur_time = 0;
+	game->old_time = 0;
 	return (1);
 }
 
