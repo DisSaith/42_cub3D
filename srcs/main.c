@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/07 13:27:32 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/12 13:59:41 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	main(int argc, char **argv)
 	t_game	game;
 
 	ft_memset(&game, 0, sizeof(t_game));
-	check_map(argc, argv[1]);
+	check_file(argc, argv[1]);
 	get_game_ptr(&game);
 	if (!initialisation_game(&game))
 		close_game(&game);

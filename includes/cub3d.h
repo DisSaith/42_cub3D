@@ -72,21 +72,31 @@ typedef struct s_game
 	void		*window;
 }			t_game;
 
-typedef struct s_map
+typedef struct s_textures
+{
+	char	*NO;
+	char	*SO;
+	char	*WE;
+	char	*EA;
+	char	*F;
+	char	*C;
+}		t_textures;
+
+typedef struct s_file
 {
 	char		*filename;
 	char		**file_content;
 	char		**map;
 	size_t		height;
 	size_t		width;
-	size_t		north;
-	size_t		south;
-	size_t		east;
-	size_t		west;
-	size_t		floor;
-	size_t		ceiling;
+	size_t		NO;
+	size_t		SO;
+	size_t		EA;
+	size_t		WE;
+	size_t		F;
+	size_t		C;
 	int		fd;
-}			t_map;
+}			t_file;
 
 /************error.c**************/
 void			error_exit(char *error_message);
@@ -98,17 +108,19 @@ void			init_player(t_game *game);
 int				main(int argc, char **argv);
 
 /**********parsing.c***********/
-void	check_file_extension(char *filename);
-void	check_file_existence(t_map *map);
-void    convert_file_to_tab(t_map *map);
-void    get_map_height(t_map *map);
-void    check_map_content(t_map *map);
-void    check_element(t_map *map, size_t i);
-void    init_map(t_map *map, char *filename);
-int     check_map(int argc, char *filename);
-int	element_find(t_map *map);
-size_t     skip_space(char *str);
-size_t     skip_empty_line(t_map *map, size_t i);
+void		check_file_extension(char *filename);
+void		check_texture_file_extension(char *filename);
+void		check_file_existence(t_file *file);
+void    	convert_file_to_tab(t_file *file);
+void    	get_map_height(t_file *file);
+void    	check_map_content(t_file *file, t_textures *textures);
+void    	init_file(t_file *file, char *filename);
+int     	check_file(int argc, char *filename);
+int		element_find(t_file *file);
+size_t		skip_space(char *str);
+size_t		back_space(char	*str);
+size_t		skip_empty_line(t_file *file, size_t i);
+size_t    	check_element(t_file *file,t_textures *texture, size_t i);
 
 /**********utils_cub3d.c**********/
 t_game			*get_game_ptr(t_game *ptr);
