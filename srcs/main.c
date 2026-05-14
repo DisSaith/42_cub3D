@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/14 16:56:17 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/14 17:56:53 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	close_game(t_game *game)
  */
 void	init_player(t_game *game)
 {
-	game->player.pos_x = 8 * 64;
-	game->player.pos_y = 8 * 64;
+	game->player.pos_x = 15 * 64;
+	game->player.pos_y = 10 * 64;
 	game->player.dir_x = 0;
 	game->player.dir_y = -1;
 	game->player.plan_x = 0.66;
@@ -54,38 +54,6 @@ void	init_player(t_game *game)
 	game->player.a_press = false;
 	game->player.right_press = false;
 	game->player.left_press = false;
-}
-
-/*
- *Tempory function to create a map
- */
-int	initialize_map(t_game *game)
-{
-	int	maptmp[10][10] = {
-	{0, 0, 0, 0, 1, 1, 1, 1, 1, 1},
-	{0, 0, 0, 0, 1, 0, 0, 0, 0, 1},
-	{0, 0, 0, 0, 1, 0, 0, 0, 0, 1},
-	{1, 1, 1, 1, 1, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-	};
-	game->map.width = 10;
-	game->map.height = 10;
-	game->map.map = malloc(sizeof(int *) * game->map.height);
-	if (!game->map.map)
-		return (0);
-	for (size_t i = 0 ; i < game->map.height ; i++)
-	{
-		game->map.map[i] = malloc(sizeof(int) * game->map.width);
-		if (!game->map.map[i])
-			return (0);
-		ft_memcpy(game->map.map[i], maptmp[i], sizeof(int) * game->map.width);
-	}
-	return (1);
 }
 
 /*
@@ -105,7 +73,6 @@ int	initialisation_game(t_game *game)
 	if (!load_textures(game))
 		return (0);
 	init_player(game);
-	initialize_map(game);
 	game->cur_time = 0;
 	game->old_time = 0;
 	return (1);
@@ -119,7 +86,9 @@ int	main(int argc, char **argv)
 	t_game	game;
 
 	ft_memset(&game, 0, sizeof(t_game));
-	check_file(argc, argv[1]);
+	check_file(&game.file, argc, argv[1]);
+	for (size_t y = 0 ; game.file.map[y] != NULL ; y++)
+			printf("%s", game.file.map[y]);
 	get_game_ptr(&game);
 	if (!initialisation_game(&game))
 		close_game(&game);

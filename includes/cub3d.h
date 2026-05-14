@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/14 16:56:11 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/14 17:56:34 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,27 +98,6 @@ typedef struct s_player
 	bool	left_press;
 }			t_player;
 
-typedef struct s_map
-{
-	int			**map;
-	size_t		height;
-	size_t		width;
-	int			fd;
-}			t_map;
-
-typedef struct s_game
-{
-	t_img		buffer;
-	t_img		wall;
-	t_img		enemy;
-	t_player	player;
-	t_map		map;
-	void		*mlx;
-	void		*window;
-	double		cur_time;
-	double		old_time;
-}			t_game;
-
 typedef struct s_textures
 {
 	char	*NO;
@@ -145,6 +124,19 @@ typedef struct s_file
 	int		fd;
 }			t_file;
 
+typedef struct s_game
+{
+	t_img		buffer;
+	t_img		wall;
+	t_img		enemy;
+	t_player	player;
+	t_file		file;
+	void		*mlx;
+	void		*window;
+	double		cur_time;
+	double		old_time;
+}			t_game;
+
 /************error.c**************/
 void			error_exit(char *error_message);
 
@@ -163,12 +155,12 @@ void    	convert_file_to_tab(t_file *file);
 void    	get_map_height(t_file *file);
 void    	check_map_content(t_file *file, t_textures *textures);
 void    	init_file(t_file *file, char *filename);
-int     	check_file(int argc, char *filename);
-int		element_find(t_file *file);
+int     	check_file(t_file *file, int argc, char *filename);
+int			element_find(t_file *file);
 size_t		skip_space(char *str);
 size_t		back_space(char	*str);
 size_t		skip_empty_line(t_file *file, size_t i);
-size_t    	check_element(t_file *file,t_textures *texture, size_t i);
+size_t    	check_element(t_file *file, t_textures *texture, size_t i);
 
 /**********utils_cub3d.c**********/
 t_game			*get_game_ptr(t_game *ptr);

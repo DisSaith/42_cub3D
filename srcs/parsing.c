@@ -6,7 +6,7 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 17:32:22 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/14 17:00:49 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/14 17:20:41 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	convert_map_to_tab(t_file *file, size_t height)
 		height++;
 		i++;
 	}
-	file->map[height] = NULL;
+	file->map[i] = NULL;
 }
 
 void	check_file_content(t_file *file, t_textures *textures)
@@ -251,19 +251,18 @@ void	init_textures(t_textures *textures)
 	textures->WE = '\0';
 
 }
-int	check_file(int argc, char *filename)
+int	check_file(t_file *file, int argc, char *filename)
 {
-	t_file		file;
 	t_textures	textures;
 
 	if (argc != 2)
 		error_exit("Invalid arguments");
 	check_file_extension(filename);
-	init_file(&file, filename);
-	check_file_existence(&file);
-	get_file_height(&file);
-	convert_file_to_tab(&file);
+	init_file(file, filename);
+	check_file_existence(file);
+	get_file_height(file);
+	convert_file_to_tab(file);
 	init_textures(&textures);
-	check_file_content(&file, &textures);
+	check_file_content(file, &textures);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/14 15:27:02 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/14 17:49:37 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ int	check_collision(t_game *game, char direction, double dir_x, double dir_y)
 	{
 		new_x = (game->player.pos_x + dir_x) / TILE_SIZE;
 		y = game->player.pos_y / TILE_SIZE;
-		if (game->map.map[y][new_x] == 0)
-			return (1);
+		if (game->file.map[y][new_x] == '1')
+			return (0);
 	}
 	if (direction == 'y')
 	{
 		new_y = (game->player.pos_y + dir_y) / TILE_SIZE;
 		x = game->player.pos_x / TILE_SIZE;
-		if (game->map.map[new_y][x] == 0)
-			return (1);
+		if (game->file.map[new_y][x] == '1')
+			return (0);
 	}
-	return (0);
+	return (1);
 }
 
 /*
@@ -69,7 +69,7 @@ void	rotate_fov(t_game *game, double rotation,
 		game->player.plan_y = old_plan_x * sin(-rotation)
 			+ game->player.plan_y * cos(-rotation);
 	}
-	if (game->player.right_press == true)
+	else if (game->player.right_press == true)
 	{
 		game->player.dir_x = old_dir_x * cos(rotation)
 			- game->player.dir_y * sin(rotation);

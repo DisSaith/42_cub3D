@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/11 13:15:34 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/14 12:10:19 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/14 17:47:41 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	perform_dda_algorithme(t_game *game, t_raycasting *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (game->map.map[ray->map_y][ray->map_x] > 0)
+		if (game->file.map[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
 	}
 }
