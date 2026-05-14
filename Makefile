@@ -38,7 +38,7 @@ $(LIBFT):
 
 objs/%.o: srcs/%.c 
 		mkdir -p $(@D)
-		$(CC) $(CFLAGS) $(INCLUDES) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+		$(CC) $(CFLAGS) $(INCLUDES) -I/usr/include -Imlx_linux -c $< -o $@
 
 
 $(NAME):	$(LIBFT) $(OBJS)

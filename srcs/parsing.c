@@ -6,7 +6,7 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 17:32:22 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/12 16:46:43 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/14 17:00:49 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,58 @@
 void	check_file_extension(char *filename)
 {
 	size_t	len;
-
+	
 	if (!filename || !filename[0])
-		error_exit("Invalid map file name");
+		error_exit("Invalid file name");
 	len = ft_strlen(filename);
 	if (len < 5 || ft_strncmp(filename + len - 4, ".cub", 4) != 0)
-	{
-		error_exit("Invalid map file extension");
-	}
+		error_exit("Invalid file extension");
 }
+void	check_texture_file_extension(char *filename)
+{
+	size_t	len;
+
+	if (!filename || !filename[0])
+		error_exit("Invalid texture file name");
+	len = back_space(filename);
+	if (len < 5 || ft_strncmp(filename + len - 4, ".xpm", 4) != 0 )
+		error_exit("Invalid texture file extention");
+}
+
 // verifie l'existence du fichier.
 void	check_file_existence(t_file *file)
 {
 	file->fd = open(file->filename, O_RDONLY);
 	if (file->fd == -1)
-		error_exit("file not found!");
+	{
+		close(file->fd);
+		error_exit("File not found!");
+	}
+}
+
+// verifie l'existence du fichier.
+void	check_texture_file_existence(char *path)
+{
+	int	fd;
+	int	x;
+	int	len;
+	char	*filename;
+
+	x = 0;
+	while (!(path[x] == '.'))
+		x++;
+	len = back_space(&path[x]);
+	filename = malloc(sizeof(char *) * (len) + 1);
+	if (!filename)
+		error_exit("Malloc");
+	ft_strncpy(filename, &path[x], (len));
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+	{
+		close(fd);
+		error_exit("Texture file not found!");
+	}
+	close(fd);
 }
 
 // recuper la hauteur du fichier.
@@ -65,6 +102,7 @@ void	convert_file_to_tab(t_file *file)
 		file->file_content[i] = get_next_line(file->fd);
 		i++;
 	}
+	close(file->fd);
 	file->file_content[i] = NULL; 
 }
 
@@ -85,89 +123,92 @@ void	convert_map_to_tab(t_file *file, size_t height)
 	file->map[height] = NULL;
 }
 
+void	check_file_content(t_file *file, t_textures *textures)
+{
+	size_t	y;
+	size_t	return_value;
+
+	y = 0;
+	return_value = 0;
+	while (y < file->height)
+	{
+		y = skip_empty_line(file, y);
+		if (element_find(file))
+			break ;
+		return_value = check_element(file, textures, y);
+		if (return_value == 1)
+		{
+			check_texture_file_extension(file->file_content[y]);
+			check_texture_file_existence(file->file_content[y]);
+		}
+		y++;
+	}
+	y = skip_empty_line(file, y);
+	convert_map_to_tab(file, y);
+//je parse le tableau file pour check tout les element de la file.
+}
+/*
 void	check_map_content(t_file *file)
 {
-	size_t	i;
 
-	i = 0;
-	while (i < file->height)
-	{
-		i = skip_empty_line(file, i);
-		if (!element_find(file))
-			break ;
-		check_element(file, i);
-		i++;
-	}
-	i = skip_empty_line(file, i);
-	convert_map_to_tab(file, i);
-	i = 0;
-	while (i < 14)
-	{
-		printf("%s", file->map[i]);
-		i++;
-	}
-
-//copie de la fin du ficher map donc normalement il ne reste que la map et je parse le tableau map pour check tout les element de la map.
 }
 
-void	check_element(t_file *file, size_t i)
+void	check_map_element(t_file *file, size_t x, size_t y)
 {
-	size_t	j;
 
-	j = skip_space(file->file_content[i]);
-	if (!ft_strncmp(&file->file_content[i][j], "NO ", 3) && file->north == 0)
-		file->north = 1;
-	else if (!ft_strncmp(&file->file_content[i][j], "SO ", 3) && file->south == 0)
-		file->south = 1;
-	else if (!ft_strncmp(&file->file_content[i][j], "WE ", 3) && file->west == 0)
-		file->west = 1;
-	else if (!ft_strncmp(&file->file_content[i][j], "EA ", 3) && file->east == 0)
-		file->east = 1;
-	else if (!ft_strncmp(&file->file_content[i][j], "F ", 2) && file->floor == 0)
-		file->floor = 1;
-	else if (!ft_strncmp(&file->file_content[i][j], "C ", 2) && file->ceiling == 0)
-		file->ceiling = 1;
+}
+*/
+size_t	check_element(t_file *file, t_textures *textures, size_t y)
+{
+	size_t	x;
+
+	x = skip_space(file->file_content[y]);
+	if (!ft_strncmp(&file->file_content[y][x], "NO ", 3) && file->NO == 0)
+		return (file->NO = 1, textures->NO = file->file_content[y], 1);
+	else if (!ft_strncmp(&file->file_content[y][x], "SO ", 3) && file->SO == 0)
+		return (file->SO = 1, textures->SO = file->file_content[y], 1);
+	else if (!ft_strncmp(&file->file_content[y][x], "WE ", 3) && file->WE == 0)
+		return (file->WE = 1, textures->WE = file->file_content[y], 1);
+	else if (!ft_strncmp(&file->file_content[y][x], "EA ", 3) && file->EA == 0)
+		return (file->EA = 1, textures->EA = file->file_content[y], 1);
+	else if (!ft_strncmp(&file->file_content[y][x], "F ", 2) && file->F == 0)
+		return (file->F = 1, textures->F = file->file_content[y], 0);
+	else if (!ft_strncmp(&file->file_content[y][x], "C ", 2) && file->C == 0)
+		return (file->C = 1, textures->C = file->file_content[y], 0);
 	else
-		error_exit("Map file content is incorrect.");
-	printf("%ld %ld %ld %ld %ld %ld\n", file->north, file->south, file->west, file->east, file->floor, file->ceiling);
+		return (error_exit("Map file content is incorrect."), 0);
 }
 
 int	element_find(t_file *file)
 {
-	if (file->north == 1)
-	{
-		if (file->south == 1)
-		{
-			if (file->east == 1)
-			{
-				if (file->west == 1)
-				{
-					if (file->floor == 1)
-					{
-						if (file->ceiling == 1)
-							return (0);
-						else
-							return (1);
-					}
-					return (1);
-				}
-				return (1);
-			}
-			return (1);
-		}
+	if (file->NO == 1 
+		&& file->SO == 1
+		&& file->EA == 1
+		&& file->WE == 1
+		&& file->F == 1
+		&& file->C == 1)
 		return (1);
-	}
-	return (1);
+	return (0);
 }
 
 size_t	skip_space(char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (str[i] == ' ')
+	while (ft_isspace(str[i]))
 		i++;
 	return (i);
+}
+
+size_t	back_space(char *str)
+{
+	size_t	len;
+
+	len = ft_strlen(str);
+	while(ft_isspace(str[len - 1]))
+		len--;
+	return (len);
 }
 
 size_t	skip_empty_line(t_file *file, size_t i)
@@ -193,26 +234,36 @@ void	init_file(t_file *file, char *filename)
 	file->filename = filename;
 	file->height = 0;
 	file->width = 0;
-	file->north = 0;
-	file->south = 0;
-	file->east = 0;
-	file->west = 0;
-	file->floor = 0;
-	file->ceiling = 0;
+	file->NO = 0;
+	file->SO = 0;
+	file->EA = 0;
+	file->WE = 0;
+	file->F = 0;
+	file->C = 0;
 	file->fd = 0;
 }
 
-int	check_map(int argc, char *filename)
+void	init_textures(t_textures *textures)
 {
-	t_file	map;
+	textures->NO = '\0';
+	textures->SO = '\0';
+	textures->EA = '\0';
+	textures->WE = '\0';
+
+}
+int	check_file(int argc, char *filename)
+{
+	t_file		file;
+	t_textures	textures;
 
 	if (argc != 2)
 		error_exit("Invalid arguments");
 	check_file_extension(filename);
-	init_file(&map, filename);
-	check_file_existence(&map);
-	get_file_height(&map);
-	convert_file_to_tab(&map);
-	check_map_content(&map);
+	init_file(&file, filename);
+	check_file_existence(&file);
+	get_file_height(&file);
+	convert_file_to_tab(&file);
+	init_textures(&textures);
+	check_file_content(&file, &textures);
 	return (0);
 }
