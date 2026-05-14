@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/12 16:45:47 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/14 12:09:12 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <math.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 # define W_KEY 119
 # define S_KEY 115
@@ -60,12 +61,8 @@ typedef struct s_img
 
 typedef struct s_raycasting
 {
-	double	pos_x;
-	double	pos_y;
-	double	dir_x;
-	double	dir_y;
-	double	plan_x;
-	double	plan_y;
+	double	player_pos_x;
+	double	player_pos_y;
 	double	raydir_x;
 	double	raydir_y;
 	double	camera_x;
@@ -195,6 +192,11 @@ void			move_player_2d(t_game *game);
 int				rendering_2d(t_game *game);
 
 /**********raycasting.c**********/
-int				raycasting(t_game *game);
+void			initialize_ray1(t_game *game, t_raycasting *ray);
+void			initialize_ray2(t_game *game, t_raycasting *ray);
+void			perform_dda_algorithme(t_game *game, t_raycasting *ray);
+void			calculate_what_to_display(t_game *game, t_raycasting *ray);
+void			raycasting(t_game *game);
+//int				raycasting(t_game *game);
 
 #endif
