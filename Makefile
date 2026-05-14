@@ -6,7 +6,7 @@
 #    By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/28 17:01:03 by acohaut           #+#    #+#              #
-#    Updated: 2026/05/11 15:14:15 by acohaut          ###   ########.fr        #
+#    Updated: 2026/05/14 15:14:39 by acohaut          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS		= 	srcs/main.c \
 				srcs/rendering.c \
 				srcs/load_textures.c \
 				srcs/key_manager.c \
+				srcs/move_player.c \
 				srcs/utils_cub3d.c \
 				srcs/test_mlx.c \
 				srcs/error.c \

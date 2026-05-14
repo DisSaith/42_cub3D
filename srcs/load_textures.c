@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/07 13:25:05 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/14 13:52:28 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ int	load_textures(t_game *game)
 		return (0);
 	if (!load_xpm(game, &game->enemy, "textures/enemy.xpm"))
 		return (0);
-	game->wall.x = 50;
-	game->wall.y = 50;
 	return (1);
 }
 

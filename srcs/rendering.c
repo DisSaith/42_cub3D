@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/12 16:30:48 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/14 13:33:21 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
  *									unsigned int pixel);
  *	void			draw_sprite(t_game *game, t_img *sprite, 
  *								int pos_x, int pos_y);
+ *	void			draw_column(t_game *game, t_raycasting *ray, int x);
  *	int				rendering(t_game *game);
  */
 
@@ -72,29 +73,29 @@ void	draw_sprite(t_game *game, t_img *sprite, int pos_x, int pos_y)
 	}
 }
 
+/*
+ *	Draw a column and determine the ceiling, floor and wall texture to draw
+ */
 void	draw_column(t_game *game, t_raycasting *ray, int x)
 {
 	unsigned int	wall_color;
 	int				y;
 
-	/* --- PLAFOND : du haut de l'écran jusqu'au début du mur --- */
 	y = 0;
 	while (y < ray->drawstart)
 	{
 		my_mlx_pixel_put(&game->buffer, x, y, CEILING_COLOR);
 		y++;
 	}
-	/* --- MUR : de drawstart à drawend --- */
 	if (ray->side == 0)
-		wall_color = WALL_NS_COLOR; /* face E/W : plus claire */
+		wall_color = WALL_NS_COLOR;
 	else
-		wall_color = WALL_EW_COLOR; /* face N/S : plus sombre */
+		wall_color = WALL_EW_COLOR;
 	while (y <= ray->drawend)
 	{
 		my_mlx_pixel_put(&game->buffer, x, y, wall_color);
 		y++;
 	}
-	/* --- SOL : du bas du mur jusqu'en bas de l'écran --- */
 	while (y < HEIGHT_WINDOW)
 	{
 		my_mlx_pixel_put(&game->buffer, x, y, FLOOR_COLOR);

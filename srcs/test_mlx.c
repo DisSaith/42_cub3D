@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/12 16:29:23 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/14 13:53:54 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,8 @@ int	rendering_2d(t_game *game)
 	double	y_line;
 	double	vector_pw;
 
-	x_line = game->wall.x + (game->wall.width / 2);
-	y_line = game->wall.y + (game->wall.height / 2);
+	x_line = 50 + (game->wall.width / 2);
+	y_line = 50 + (game->wall.height / 2);
 	vector_pw = sqrt((game->player.pos_x - x_line) * (game->player.pos_x - x_line)
 			+ (game->player.pos_y - y_line) * (game->player.pos_y - y_line));
 	//printf("vector_pw = %f\n", vector_pw);

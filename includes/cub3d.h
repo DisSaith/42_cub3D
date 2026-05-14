@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/14 12:09:12 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/14 15:14:58 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ typedef struct s_img
 	int		endian;
 	int		width;
 	int		height;
-	int		x;
-	int		y;
 }			t_img;
 
 typedef struct s_raycasting
@@ -134,7 +132,7 @@ typedef struct s_file
 	size_t		west;
 	size_t		floor;
 	size_t		ceiling;
-	int		fd;
+	int			fd;
 }			t_file;
 
 /************error.c**************/
@@ -148,18 +146,18 @@ void			init_player(t_game *game);
 int				main(int argc, char **argv);
 
 /**********parsing.c***********/
-void	check_file_extension(char *filename);
-void	check_file_existence(t_file *file);
-void    convert_file_to_tab(t_file *file);
-void    convert_map_to_tab(t_file *file, size_t height);
-void    get_file_height(t_file *file);
-void    check_map_content(t_file *file);
-void    check_element(t_file *file, size_t i);
-void    init_file(t_file *file, char *filename);
-int     check_map(int argc, char *filename);
-int	element_find(t_file *file);
-size_t     skip_space(char *str);
-size_t     skip_empty_line(t_file *file, size_t i);
+void			check_file_extension(char *filename);
+void			check_file_existence(t_file *file);
+void			convert_file_to_tab(t_file *file);
+void			convert_map_to_tab(t_file *file, size_t height);
+void			get_file_height(t_file *file);
+void			check_map_content(t_file *file);
+void			check_element(t_file *file, size_t i);
+void			init_file(t_file *file, char *filename);
+int				check_map(int argc, char *filename);
+int				element_find(t_file *file);
+size_t			skip_space(char *str);
+size_t			skip_empty_line(t_file *file, size_t i);
 
 /**********utils_cub3d.c**********/
 t_game			*get_game_ptr(t_game *ptr);
@@ -167,8 +165,14 @@ t_game			*get_game_ptr(t_game *ptr);
 /**********key_manager.c**********/
 int				key_press(int keycode, t_game *game);
 int				key_release(int keycode, t_game *game);
-int				check_collision_x(t_game *game, double dx);
-int				check_collision_y(t_game *game, double dy);
+
+/**********move_player.c**********/
+int				check_collision(t_game *game, char direction,
+					double dir_x, double dir_y);
+void			rotate_fov(t_game *game, double rotation,
+					double old_dir_x, double old_plan_x);
+void			move_vertical(t_game *game, double speed);
+void			move_horizontal(t_game *game, double speed);
 void			move_player(t_game *game);
 
 /**********rendering.c**********/
@@ -197,6 +201,5 @@ void			initialize_ray2(t_game *game, t_raycasting *ray);
 void			perform_dda_algorithme(t_game *game, t_raycasting *ray);
 void			calculate_what_to_display(t_game *game, t_raycasting *ray);
 void			raycasting(t_game *game);
-//int				raycasting(t_game *game);
 
 #endif
