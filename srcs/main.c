@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/15 15:14:03 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/15 15:57:05 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ int	initialisation_game(t_game *game)
 	if (!load_textures(game))
 		return (0);
 	init_player(game);
-	game->cur_time = 0;
-	game->old_time = 0;
 	return (1);
 }
 

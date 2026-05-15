@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/15 15:32:28 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/15 15:57:45 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,12 @@ typedef struct s_file
 	char		**map;
 	size_t		height;
 	size_t		width;
-	size_t		no;
-	size_t		so;
-	size_t		ea;
-	size_t		we;
-	size_t		f;
-	size_t		c;
+	size_t		NO;
+	size_t		SO;
+	size_t		EA;
+	size_t		WE;
+	size_t		F;
+	size_t		C;
 	int			fd;
 }			t_file;
 
@@ -146,8 +146,8 @@ typedef struct s_game
 	t_file		file;
 	void		*mlx;
 	void		*window;
-	double		cur_time;
-	double		old_time;
+	long		old_time;
+	long		cur_time;
 }			t_game;
 
 /************error.c**************/
