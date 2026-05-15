@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/15 15:57:45 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/15 16:05:53 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,8 @@ typedef struct s_textures
 	char			*path_so;
 	char			*path_ea;
 	char			*path_we;
-	unsigned int	c;
-	unsigned int	f;
+	unsigned int	ceiling;
+	unsigned int	floor;
 }					t_textures;
 
 typedef struct s_file
@@ -146,8 +146,6 @@ typedef struct s_game
 	t_file		file;
 	void		*mlx;
 	void		*window;
-	long		old_time;
-	long		cur_time;
 }			t_game;
 
 /************error.c**************/
@@ -160,19 +158,20 @@ void			init_player(t_game *game);
 int				main(int argc, char **argv);
 
 /**********parsing.c***********/
-void			check_file_extension(char *filename);
-void			check_texture_file_extension(char *filename);
-void			check_file_existence(t_file *file);
-void			convert_file_to_tab(t_file *file);
-void			get_map_height(t_file *file);
-void			check_map_content(t_file *file, t_textures *textures);
-void			init_file(t_file *file, char *filename);
-int				check_file(t_file *file, int argc, char *filename);
-int				element_find(t_file *file);
-size_t			skip_space(char *str);
-size_t			back_space(char	*str);
-size_t			skip_empty_line(t_file *file, size_t i);
-size_t			check_element(t_file *file, t_textures *texture, size_t i);
+void		check_file_extension(char *filename);
+void		check_texture_file_extension(char *filename);
+void		check_file_existence(t_file *file);
+void    	convert_file_to_tab(t_file *file);
+void    	get_map_height(t_file *file);
+void    	check_map_content(t_file *file);
+void    	init_file(t_file *file, char *filename);
+void		check_map_element(t_file *file);
+int     	check_file(t_file *file, int argc, char *filename);
+int		element_find(t_file *file, size_t n);
+size_t		skip_space(char *str);
+size_t		back_space(char	*str);
+size_t		skip_empty_line(t_file *file, size_t i);
+size_t    	check_element(t_file *file,t_textures *texture, size_t i);
 
 /**********utils_cub3d.c**********/
 t_game			*get_game_ptr(t_game *ptr);
