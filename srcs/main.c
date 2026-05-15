@@ -119,7 +119,7 @@ int	main(int argc, char **argv)
 	t_game	game;
 
 	ft_memset(&game, 0, sizeof(t_game));
-	check_file(argc, argv[1]);
+	check_file(&game.file, argc, argv[1]);
 	get_game_ptr(&game);
 	if (!initialisation_game(&game))
 		close_game(&game);

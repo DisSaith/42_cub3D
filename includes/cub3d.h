@@ -106,18 +106,6 @@ typedef struct s_map
 	int			fd;
 }			t_map;
 
-typedef struct s_game
-{
-	t_img		buffer;
-	t_img		wall;
-	t_img		enemy;
-	t_player	player;
-	t_map		map;
-	void		*mlx;
-	void		*window;
-	double		cur_time;
-	double		old_time;
-}			t_game;
 
 typedef struct s_textures
 {
@@ -145,6 +133,20 @@ typedef struct s_file
 	int		fd;
 }			t_file;
 
+typedef struct s_game
+{
+	t_img		buffer;
+	t_img		wall;
+	t_img		enemy;
+	t_player	player;
+	t_file		file;
+	t_map		map;
+	void		*mlx;
+	void		*window;
+	double		cur_time;
+	double		old_time;
+}			t_game;
+
 /************error.c**************/
 void			error_exit(char *error_message);
 
@@ -161,10 +163,11 @@ void		check_texture_file_extension(char *filename);
 void		check_file_existence(t_file *file);
 void    	convert_file_to_tab(t_file *file);
 void    	get_map_height(t_file *file);
-void    	check_map_content(t_file *file, t_textures *textures);
+void    	check_map_content(t_file *file);
 void    	init_file(t_file *file, char *filename);
-int     	check_file(int argc, char *filename);
-int		element_find(t_file *file);
+void		check_map_element(t_file *file);
+int     	check_file(t_file *file, int argc, char *filename);
+int		element_find(t_file *file, size_t n);
 size_t		skip_space(char *str);
 size_t		back_space(char	*str);
 size_t		skip_empty_line(t_file *file, size_t i);
