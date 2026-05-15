@@ -6,7 +6,7 @@
 #    By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/28 17:01:03 by acohaut           #+#    #+#              #
-#    Updated: 2026/05/14 15:14:39 by acohaut          ###   ########.fr        #
+#    Updated: 2026/05/15 14:16:46 by acohaut          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SRCS		= 	srcs/main.c \
 				srcs/test_mlx.c \
 				srcs/error.c \
 				srcs/parsing.c \
-				srcs/raycasting.c \
+				srcs/utils_raycasting.c \
 
 OBJS		= $(SRCS:srcs/%.c=objs/%.o)
 

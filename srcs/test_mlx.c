@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/14 17:58:58 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/15 12:59:38 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,8 @@ int	rendering_2d(t_game *game)
 	double	y_line;
 	double	vector_pw;
 
-	x_line = 50 + (game->wall.width / 2);
-	y_line = 50 + (game->wall.height / 2);
+	//x_line = 50 + (game->wall.width / 2);
+	//y_line = 50 + (game->wall.height / 2);
 	vector_pw = sqrt((game->player.pos_x - x_line) * (game->player.pos_x - x_line)
 			+ (game->player.pos_y - y_line) * (game->player.pos_y - y_line));
 	//printf("vector_pw = %f\n", vector_pw);
@@ -172,7 +172,7 @@ int	rendering_2d(t_game *game)
 		ray_x += cos_angle;
 		ray_y += sin_angle;
 	}
-	draw_sprite(game, &game->enemy, 100, 100);
+	//draw_sprite(game, &game->enemy, 100, 100);
 	move_player_2d(game);
 	mlx_put_image_to_window(game->mlx, game->window,
 		game->buffer.mlx_img, 0, 0);

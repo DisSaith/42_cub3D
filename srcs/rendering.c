@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/14 13:33:21 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/15 15:30:27 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,14 @@
  *	[FILE DESCRIPTION]
  * Every function used to display something on screen :
  *	
- *	unsigned int	get_pixel_from_img(t_img *img, int x, int y);
  *	void			my_mlx_pixel_put(t_img *img, int x, int y, 
  *									unsigned int pixel);
  *	void			draw_sprite(t_game *game, t_img *sprite, 
  *								int pos_x, int pos_y);
  *	void			draw_column(t_game *game, t_raycasting *ray, int x);
+ *	void			raycasting(t_game *game)
  *	int				rendering(t_game *game);
  */
-
-/*
- *Calculate the position of a specific pixel from an xpm img and return it
- */
-unsigned int	get_pixel_from_img(t_img *img, int x, int y)
-{
-	char	*pixel;
-
-	pixel = img->addr + (y * img->line_len + x * (img->bits_per_pixels / 8));
-	return (*(unsigned int *)pixel);
-}
 
 /*
  * Put a pixel on an image (created before)
@@ -76,30 +65,53 @@ void	draw_sprite(t_game *game, t_img *sprite, int pos_x, int pos_y)
 /*
  *	Draw a column and determine the ceiling, floor and wall texture to draw
  */
-void	draw_column(t_game *game, t_raycasting *ray, int x)
+void	draw_column(t_game *game, t_raycasting *ray, t_column *column, int x)
 {
-	unsigned int	wall_color;
-	int				y;
+	int	y;
 
+	column->step = (double)TILE_SIZE / ray->lineheight;
+	column->tex_pos = (ray->drawstart - HEIGHT_WINDOW / 2 + ray->lineheight / 2)
+		* column->step;
 	y = 0;
 	while (y < ray->drawstart)
 	{
 		my_mlx_pixel_put(&game->buffer, x, y, CEILING_COLOR);
 		y++;
 	}
-	if (ray->side == 0)
-		wall_color = WALL_NS_COLOR;
-	else
-		wall_color = WALL_EW_COLOR;
 	while (y <= ray->drawend)
 	{
-		my_mlx_pixel_put(&game->buffer, x, y, wall_color);
+		column->tex_y = (int)column->tex_pos & (TILE_SIZE - 1);
+		my_mlx_pixel_put(&game->buffer, x, y,
+			get_pixel_from_img(column->texture, column->tex_x, column->tex_y));
+		column->tex_pos += column->step;
 		y++;
 	}
 	while (y < HEIGHT_WINDOW)
 	{
 		my_mlx_pixel_put(&game->buffer, x, y, FLOOR_COLOR);
 		y++;
+	}
+}
+
+/*
+ * Perform raycasting :
+ * Cast a ray in each column of the FOV player and calculate the distance
+ * between the player and walls to determine what to display in 3D
+ */
+void	raycasting(t_game *game)
+{
+	t_raycasting	ray;
+	t_column		column;
+
+	ray.x = 0;
+	while (ray.x < WIDTH_WINDOW)
+	{
+		initialize_ray1(game, &ray);
+		initialize_ray2(game, &ray);
+		perform_dda_algorithme(game, &ray);
+		calculate_what_to_display(game, &ray, &column);
+		draw_column(game, &ray, &column, ray.x);
+		ray.x++;
 	}
 }
 

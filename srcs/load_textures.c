@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/14 13:52:28 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/15 12:28:11 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,13 @@ int	load_buffer(t_game *game)
  */
 int	load_textures(t_game *game)
 {
-	if (!load_xpm(game, &game->wall, "textures/wall.xpm"))
+	if (!load_xpm(game, &game->textures.north, "textures/north.xpm"))
 		return (0);
-	if (!load_xpm(game, &game->enemy, "textures/enemy.xpm"))
+	if (!load_xpm(game, &game->textures.south, "textures/south.xpm"))
+		return (0);
+	if (!load_xpm(game, &game->textures.east, "textures/east.xpm"))
+		return (0);
+	if (!load_xpm(game, &game->textures.west, "textures/west.xpm"))
 		return (0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 17:32:22 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/14 17:20:41 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/15 13:02:44 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,17 +164,17 @@ size_t	check_element(t_file *file, t_textures *textures, size_t y)
 
 	x = skip_space(file->file_content[y]);
 	if (!ft_strncmp(&file->file_content[y][x], "NO ", 3) && file->NO == 0)
-		return (file->NO = 1, textures->NO = file->file_content[y], 1);
+		return (file->NO = 1, textures->path_no = file->file_content[y], 1);
 	else if (!ft_strncmp(&file->file_content[y][x], "SO ", 3) && file->SO == 0)
-		return (file->SO = 1, textures->SO = file->file_content[y], 1);
+		return (file->SO = 1, textures->path_so = file->file_content[y], 1);
 	else if (!ft_strncmp(&file->file_content[y][x], "WE ", 3) && file->WE == 0)
-		return (file->WE = 1, textures->WE = file->file_content[y], 1);
+		return (file->WE = 1, textures->path_we = file->file_content[y], 1);
 	else if (!ft_strncmp(&file->file_content[y][x], "EA ", 3) && file->EA == 0)
-		return (file->EA = 1, textures->EA = file->file_content[y], 1);
+		return (file->EA = 1, textures->path_ea = file->file_content[y], 1);
 	else if (!ft_strncmp(&file->file_content[y][x], "F ", 2) && file->F == 0)
-		return (file->F = 1, textures->F = file->file_content[y], 0);
+		return (file->F = 1, textures->f = (unsigned int)file->file_content[y], 0);
 	else if (!ft_strncmp(&file->file_content[y][x], "C ", 2) && file->C == 0)
-		return (file->C = 1, textures->C = file->file_content[y], 0);
+		return (file->C = 1, textures->c = (unsigned int)file->file_content[y], 0);
 	else
 		return (error_exit("Map file content is incorrect."), 0);
 }
@@ -245,12 +245,13 @@ void	init_file(t_file *file, char *filename)
 
 void	init_textures(t_textures *textures)
 {
-	textures->NO = '\0';
-	textures->SO = '\0';
-	textures->EA = '\0';
-	textures->WE = '\0';
+	textures->path_no = '\0';
+	textures->path_so = '\0';
+	textures->path_ea = '\0';
+	textures->path_we = '\0';
 
 }
+
 int	check_file(t_file *file, int argc, char *filename)
 {
 	t_textures	textures;

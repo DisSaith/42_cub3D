@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/14 17:56:53 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/15 15:14:03 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,14 @@ int	close_game(t_game *game)
 {
 	if (game->buffer.mlx_img)
 		mlx_destroy_image(game->mlx, game->buffer.mlx_img);
-	if (game->wall.mlx_img)
-		mlx_destroy_image(game->mlx, game->wall.mlx_img);
-	if (game->enemy.mlx_img)
-		mlx_destroy_image(game->mlx, game->enemy.mlx_img);
+	if (game->textures.north.mlx_img)
+		mlx_destroy_image(game->mlx, game->textures.north.mlx_img);
+	if (game->textures.south.mlx_img)
+		mlx_destroy_image(game->mlx, game->textures.south.mlx_img);
+	if (game->textures.west.mlx_img)
+		mlx_destroy_image(game->mlx, game->textures.west.mlx_img);
+	if (game->textures.east.mlx_img)
+		mlx_destroy_image(game->mlx, game->textures.east.mlx_img);
 	if (game->window)
 	{
 		mlx_destroy_window(game->mlx, game->window);
