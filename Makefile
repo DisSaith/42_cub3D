@@ -28,6 +28,7 @@ SRCS		= 	srcs/main.c \
 				srcs/error.c \
 				srcs/parsing.c \
 				srcs/utils_raycasting.c \
+				srcs/free.c \
 
 OBJS		= $(SRCS:srcs/%.c=objs/%.o)
 

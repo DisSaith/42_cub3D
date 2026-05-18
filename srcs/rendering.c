@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/15 17:49:33 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/18 13:55:29 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ void	draw_column(t_game *game, t_raycasting *ray, t_column *column, int x)
 	y = 0;
 	while (y < ray->drawstart)
 	{
-		my_mlx_pixel_put(&game->buffer, x, y, CEILING_COLOR);
+		//my_mlx_pixel_put(&game->buffer, x, y, CEILING_COLOR);
+		my_mlx_pixel_put(&game->buffer, x, y, game->textures.ceiling);
+		//my_mlx_pixel_put(&game->buffer, x, y, 0xdc6432);
 		y++;
 	}
 	while (y <= ray->drawend)
@@ -88,7 +90,8 @@ void	draw_column(t_game *game, t_raycasting *ray, t_column *column, int x)
 	}
 	while (y < HEIGHT_WINDOW)
 	{
-		my_mlx_pixel_put(&game->buffer, x, y, FLOOR_COLOR);
+		//my_mlx_pixel_put(&game->buffer, x, y, FLOOR_COLOR);
+		my_mlx_pixel_put(&game->buffer, x, y, game->textures.floor);
 		y++;
 	}
 }

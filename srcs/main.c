@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/15 16:44:36 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/18 13:51:58 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,7 @@ int	main(int argc, char **argv)
 	t_game	game;
 
 	ft_memset(&game, 0, sizeof(t_game));
-	check_file(&game.file, argc, argv[1]);
-	for (size_t y = 0 ; game.file.map[y] != NULL ; y++)
-			printf("%s", game.file.map[y]);
+	check_file(&game.file, &game.textures, argc, argv[1]);
 	get_game_ptr(&game);
 	if (!initialisation_game(&game))
 		close_game(&game);

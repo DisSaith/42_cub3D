@@ -6,7 +6,7 @@
 /*   By: acohaut <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 18:46:54 by acohaut           #+#    #+#             */
-/*   Updated: 2026/02/13 11:35:31 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/17 15:16:30 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*read_file(int fd, char *file)
 			return (NULL);
 		}
 		buffer[nb_read] = '\0';
-		file = ft_strjoin(file, buffer);
+		file = ft_strjoin_gnl(file, buffer);
 	}
 	free(buffer);
 	return (file);

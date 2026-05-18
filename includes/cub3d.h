@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/15 16:40:50 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/18 13:51:24 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ typedef struct s_file
 	size_t		C;
 	int			map_height;
 	int			map_width;
+	size_t		player_count;
 	int			fd;
 }			t_file;
 
@@ -168,8 +169,8 @@ void    	convert_file_to_tab(t_file *file);
 void    	get_map_height(t_file *file);
 void    	check_map_content(t_file *file);
 void    	init_file(t_file *file, char *filename);
-void		check_map_element(t_file *file);
-int     	check_file(t_file *file, int argc, char *filename);
+size_t		check_map_element(t_file *file, size_t x, size_t y);
+int     	check_file(t_file *file, t_textures *texture, int argc, char *filename);
 int		element_find(t_file *file, size_t n);
 size_t		skip_space(char *str);
 size_t		back_space(char	*str);
@@ -224,5 +225,8 @@ void			initialize_column(t_game *game,
 					t_raycasting *ray, t_column *column);
 void			calculate_what_to_display(t_game *game,
 					t_raycasting *ray, t_column *column);
-
+/*****************free.c***************/
+ void    free_parsing_data(t_game *game);
+ void    free_mlx_data(t_game *game);
+ void    free_game_data(t_game *game);
 #endif

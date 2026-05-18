@@ -59,19 +59,31 @@ int	load_mini_map(t_game *game)
 /*
  * Load and initialise every texture for the game
  */
+/* Remplace load_textures */
 int	load_textures(t_game *game)
 {
-	if (!load_xpm(game, &game->textures.north, "textures/north.xpm"))
+	if (!load_xpm(game, &game->textures.north, game->textures.path_no))
+	{
+		printf("Error\nEchec chargement texture NO: %s\n", game->textures.path_no);
 		return (0);
-	if (!load_xpm(game, &game->textures.south, "textures/south.xpm"))
+	}
+	if (!load_xpm(game, &game->textures.south, game->textures.path_so))
+	{
+		printf("Error\nEchec chargement texture SO: %s\n", game->textures.path_so);
 		return (0);
-	if (!load_xpm(game, &game->textures.east, "textures/east.xpm"))
+	}
+	if (!load_xpm(game, &game->textures.east, game->textures.path_ea))
+	{
+		printf("Error\nEchec chargement texture EA: %s\n", game->textures.path_ea);
 		return (0);
-	if (!load_xpm(game, &game->textures.west, "textures/west.xpm"))
+	}
+	if (!load_xpm(game, &game->textures.west, game->textures.path_we))
+	{
+		printf("Error\nEchec chargement texture WE: %s\n", game->textures.path_we);
 		return (0);
+	}
 	return (1);
 }
-
 /*
  * Load an xpm file and initialise its data used by mlx
  */
