@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/15 15:57:18 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/15 17:49:33 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,15 +115,61 @@ void	raycasting(t_game *game)
 	}
 }
 
+void	draw_square(t_game *game, int pos_x, int pos_y, unsigned int color)
+{
+	int		x;
+	int		y;
+
+	y = 0;
+	while (y < game->file.map_height)
+	{
+		x = 0;
+		while (x < game->file.map_width)
+		{
+			my_mlx_pixel_put(&game->mini_map, x + pos_x, y + pos_y, color);
+			x++;
+		}
+		y++;
+	}
+}
+
+void	draw_mini_map(t_game *game, t_img *sprite, int pos_x, int pos_y)
+{
+	int				x;
+	int				y;
+
+	y = 0;
+	while (y < game->file.map_height)
+	{
+		x = 0;
+		while (x < game->file.map_width)
+		{
+			draw_square(game, game->player.pos_x / game->file.map_width, game->player.pos_y / game->file.map_height, GREEN);
+			if (game->file.map[y][x] == '1')
+				draw_square(game, pos_x, pos_y, RED);
+			else
+				draw_square(game, pos_x, pos_y, BLUE);
+			x++;
+			pos_x += game->file.map_width;
+		}
+		y++;
+		pos_y += game->file.map_height;
+	}
+}
+
 /*
  * Rendering each frame (associate with mlx_loop_hook)
  */
 int	rendering(t_game *game)
 {
 	ft_bzero(game->buffer.addr, (game->buffer.width * game->buffer.height) * 4);
+	ft_bzero(game->mini_map.addr, (game->mini_map.width * game->mini_map.height));
 	move_player(game);
 	raycasting(game);
 	mlx_put_image_to_window(game->mlx, game->window,
 		game->buffer.mlx_img, 0, 0);
+	draw_mini_map(game, &game->mini_map, 0, 0);
+	mlx_put_image_to_window(game->mlx, game->window,
+		game->mini_map.mlx_img, 0, 0);
 	return (0);
 }

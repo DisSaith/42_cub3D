@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/15 16:05:53 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/15 16:40:50 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,12 +135,15 @@ typedef struct s_file
 	size_t		WE;
 	size_t		F;
 	size_t		C;
+	int			map_height;
+	int			map_width;
 	int			fd;
 }			t_file;
 
 typedef struct s_game
 {
 	t_img		buffer;
+	t_img		mini_map;
 	t_textures	textures;
 	t_player	player;
 	t_file		file;
@@ -201,6 +204,7 @@ int				rendering(t_game *game);
 
 /**********load_textures.c**********/
 int				load_buffer(t_game *game);
+int				load_mini_map(t_game *game);
 int				load_textures(t_game *game);
 int				load_xpm(t_game *game, t_img *img, char *path);
 

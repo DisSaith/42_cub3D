@@ -6,7 +6,7 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 17:32:22 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/15 16:12:25 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/15 16:18:27 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,9 +256,9 @@ size_t	check_element(t_file *file, t_textures *textures, size_t y)
 		return (file->EA = 1, 1);
 	}
 	else if (!ft_strncmp(&file->file_content[y][x], "F ", 2) && file->F == 0)
-		return (file->F = 1, textures->f = (unsigned int)file->file_content[y], 0);
+		return (file->F = 1, textures->floor = (unsigned int)file->file_content[y], 0);
 	else if (!ft_strncmp(&file->file_content[y][x], "C ", 2) && file->C == 0)
-		return (file->C = 1, textures->c = (unsigned int)file->file_content[y], 0);
+		return (file->C = 1, textures->ceiling = (unsigned int)file->file_content[y], 0);
 	else
 		return (error_exit("Map file content is incorrect."), 0);
 }
