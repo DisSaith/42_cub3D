@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/18 13:51:58 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/19 12:35:00 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	init_player(t_game *game)
 	game->player.dir_y = -1;
 	game->player.plan_x = 0.66;
 	game->player.plan_y = 0;
-	game->player.angle = PI / 2;
 	game->player.w_press = false;
 	game->player.s_press = false;
 	game->player.d_press = false;

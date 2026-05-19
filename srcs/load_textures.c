@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/15 17:48:36 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/19 12:34:45 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,16 @@ int	load_mini_map(t_game *game)
 {
 	game->file.map_height = 10;
 	game->file.map_width = 10;
-	game->mini_map.mlx_img = mlx_new_image(game->mlx,
-			WIDTH_WINDOW / game->file.map_width, HEIGHT_WINDOW / game->file.map_height);
-	if (!game->mini_map.mlx_img)
+	game->mini_map.img.width = 160;
+	game->mini_map.img.height = 160;
+	game->mini_map.img.mlx_img = mlx_new_image(game->mlx,
+			game->mini_map.img.width, game->mini_map.img.height);
+	if (!game->mini_map.img.mlx_img)
 		return (0);
-	game->mini_map.addr = mlx_get_data_addr(game->mini_map.mlx_img,
-			&game->mini_map.bits_per_pixels,
-			&game->mini_map.line_len,
-			&game->mini_map.endian);
-	game->mini_map.width = WIDTH_WINDOW / game->file.map_width;
-	game->mini_map.height = HEIGHT_WINDOW / game->file.map_height;
+	game->mini_map.img.addr = mlx_get_data_addr(game->mini_map.img.mlx_img,
+			&game->mini_map.img.bits_per_pixels,
+			&game->mini_map.img.line_len,
+			&game->mini_map.img.endian);
 	return (1);
 }
 

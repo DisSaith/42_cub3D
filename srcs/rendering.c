@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/18 13:55:29 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/19 14:59:46 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, unsigned int pixel)
 {
 	char	*dst;
 
-	if (x >= WIDTH_WINDOW || y >= HEIGHT_WINDOW || x < 0 || y < 0)
+	if (x >= img->width || y >= img->height || x < 0 || y < 0)
 		return ;
 	dst = img->addr + (y * img->line_len + x * (img->bits_per_pixels / 8));
 	*(unsigned int *)dst = pixel;
@@ -69,15 +69,13 @@ void	draw_column(t_game *game, t_raycasting *ray, t_column *column, int x)
 {
 	int	y;
 
-	column->step = (double)TILE_SIZE / ray->lineheight;
+	column->step = (double)column->texture->width / ray->lineheight;
 	column->tex_pos = (ray->drawstart - HEIGHT_WINDOW / 2 + ray->lineheight / 2)
 		* column->step;
 	y = 0;
 	while (y < ray->drawstart)
 	{
-		//my_mlx_pixel_put(&game->buffer, x, y, CEILING_COLOR);
 		my_mlx_pixel_put(&game->buffer, x, y, game->textures.ceiling);
-		//my_mlx_pixel_put(&game->buffer, x, y, 0xdc6432);
 		y++;
 	}
 	while (y <= ray->drawend)
@@ -90,7 +88,6 @@ void	draw_column(t_game *game, t_raycasting *ray, t_column *column, int x)
 	}
 	while (y < HEIGHT_WINDOW)
 	{
-		//my_mlx_pixel_put(&game->buffer, x, y, FLOOR_COLOR);
 		my_mlx_pixel_put(&game->buffer, x, y, game->textures.floor);
 		y++;
 	}
@@ -105,58 +102,19 @@ void	raycasting(t_game *game)
 {
 	t_raycasting	ray;
 	t_column		column;
+	t_mini_map		*mini_map;
 
 	ray.x = 0;
+	mini_map = &game->mini_map;
 	while (ray.x < WIDTH_WINDOW)
 	{
 		initialize_ray1(game, &ray);
-		initialize_ray2(game, &ray);
+		initialize_ray2(&ray);
 		perform_dda_algorithme(game, &ray);
-		calculate_what_to_display(game, &ray, &column);
+		calculate_what_to_display(game, &ray, &column, mini_map);
+		draw_line_minimap(game);
 		draw_column(game, &ray, &column, ray.x);
 		ray.x++;
-	}
-}
-
-void	draw_square(t_game *game, int pos_x, int pos_y, unsigned int color)
-{
-	int		x;
-	int		y;
-
-	y = 0;
-	while (y < game->file.map_height)
-	{
-		x = 0;
-		while (x < game->file.map_width)
-		{
-			my_mlx_pixel_put(&game->mini_map, x + pos_x, y + pos_y, color);
-			x++;
-		}
-		y++;
-	}
-}
-
-void	draw_mini_map(t_game *game, t_img *sprite, int pos_x, int pos_y)
-{
-	int				x;
-	int				y;
-
-	y = 0;
-	while (y < game->file.map_height)
-	{
-		x = 0;
-		while (x < game->file.map_width)
-		{
-			draw_square(game, game->player.pos_x / game->file.map_width, game->player.pos_y / game->file.map_height, GREEN);
-			if (game->file.map[y][x] == '1')
-				draw_square(game, pos_x, pos_y, RED);
-			else
-				draw_square(game, pos_x, pos_y, BLUE);
-			x++;
-			pos_x += game->file.map_width;
-		}
-		y++;
-		pos_y += game->file.map_height;
 	}
 }
 
@@ -165,14 +123,14 @@ void	draw_mini_map(t_game *game, t_img *sprite, int pos_x, int pos_y)
  */
 int	rendering(t_game *game)
 {
-	ft_bzero(game->buffer.addr, (game->buffer.width * game->buffer.height) * 4);
-	ft_bzero(game->mini_map.addr, (game->mini_map.width * game->mini_map.height));
+	ft_bzero(game->buffer.addr, game->buffer.line_len * game->buffer.height);
+	ft_bzero(game->mini_map.img.addr, game->mini_map.img.line_len * game->mini_map.img.height);
 	move_player(game);
+	draw_minimap(game);
 	raycasting(game);
 	mlx_put_image_to_window(game->mlx, game->window,
 		game->buffer.mlx_img, 0, 0);
-	draw_mini_map(game, &game->mini_map, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->window,
-		game->mini_map.mlx_img, 0, 0);
+		game->mini_map.img.mlx_img, 10, 10);
 	return (0);
 }
