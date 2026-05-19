@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/19 15:41:03 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/19 17:37:48 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ int	close_game(t_game *game)
  */
 void	init_player(t_game *game)
 {
-	game->player.dir_x = 0;
-	game->player.dir_y = -1;
-	game->player.plan_x = 0.66;
-	game->player.plan_y = 0;
+	//game->player.dir_x = 0;
+	//game->player.dir_y = -1;
+	//game->player.plan_x = 0.66;
+	//game->player.plan_y = 0;
 	game->player.w_press = false;
 	game->player.s_press = false;
 	game->player.d_press = false;

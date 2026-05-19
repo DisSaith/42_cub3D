@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/19 15:20:42 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/19 17:42:15 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,6 @@ typedef struct s_file
 	size_t		we;
 	size_t		f;
 	size_t		c;
-	int			map_height;
-	int			map_width;
 	size_t		player_count;
 	int			fd;
 	t_game		*game;
@@ -197,6 +195,8 @@ size_t			check_file(t_file *file, t_textures *texture,
 					int argc, char *filename);
 void			convert_file_to_tab(t_file *file);
 void			init_file(t_file *file, char *filename);
+void			replace_spaces_with_walls(t_file *file);
+void			get_map_dimensions(t_file *file);
 
 /*********file_parsing.c*********/
 size_t			check_element(t_file *file, t_textures *texture, size_t i);
@@ -227,7 +227,8 @@ size_t			check_rgb(t_file *file, t_textures *textures,
 void			fill_rgb(t_textures *textures, char *str, char *id);
 
 /***********player_parsing.c*********/
-void	check_player_position(t_game *game, size_t x, size_t y);
+void			check_player_position(t_game *game, size_t x, size_t y);
+void			init_player_vector(t_game *game, char direction);
 
 /**********utils_parsing.c***********/
 size_t			skip_space(char *str);

@@ -6,11 +6,50 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 13:47:04 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/19 14:58:30 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/19 17:38:32 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+void	get_map_dimensions(t_file *file)
+{
+	size_t	y;
+	size_t	current_len;
+
+	y = 0;
+	file->width = 0;
+	while (file->map[y])
+	{
+		current_len = 0;
+		while (file->map[y][current_len] != '\0'
+				&& file->map[y][current_len] != '\n')
+			current_len++;
+		if (current_len > file->width)
+			file->width = current_len;
+		y++;
+	}
+	file->height = y;
+}
+
+void	replace_spaces_with_walls(t_file *file)
+{
+	size_t	y;
+	size_t	x;
+
+	y = 0;
+	while (file->map[y])
+	{
+		x = 0;
+		while (file->map[y][x] != '\0' && file->map[y][x] != '\n')
+		{
+			if (file->map[y][x] == ' ')
+				file->map[y][x] = '1';
+			x++;
+		}
+		y++;
+	}
+}
 
 void	convert_file_to_tab(t_file *file)
 {
