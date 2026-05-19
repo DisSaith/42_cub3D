@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   player_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/05 12:13:11 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/18 16:00:58 by nofelten         ###   ########.fr       */
+/*   Created: 2026/05/19 15:09:25 by nofelten          #+#    #+#             */
+/*   Updated: 2026/05/19 15:09:29 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
-void	error_exit(char *error_message)
+void	check_player_position(t_game *game, size_t x, size_t y)
 {
-	size_t	n;
-
-	free_game_data(get_game_ptr(NULL));
-	n = ft_strlen(error_message);
-	write(2, "Error\n", 7);
-	write(2, error_message, n);
-	write(2, "\n", 1);
-	exit(1);
+	game->player.cardinal_point = game->file.map[y][x];
+	game->player.pos_x = x;
+	game->player.pos_y = y;
 }

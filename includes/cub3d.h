@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/17 15:02:59 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/19 15:06:21 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct s_player
 	double	plan_x;
 	double	plan_y;
 	double	angle;
+	char	cardinal_point;
 	bool	w_press;
 	bool	s_press;
 	bool	d_press;
@@ -122,6 +123,8 @@ typedef struct s_textures
 	unsigned int	floor;
 }					t_textures;
 
+typedef struct s_game	t_game;
+
 typedef struct s_file
 {
 	char		*filename;
@@ -129,14 +132,15 @@ typedef struct s_file
 	char		**map;
 	size_t		height;
 	size_t		width;
-	size_t		NO;
-	size_t		SO;
-	size_t		EA;
-	size_t		WE;
-	size_t		F;
-	size_t		C;
+	size_t		no;
+	size_t		so;
+	size_t		ea;
+	size_t		we;
+	size_t		f;
+	size_t		c;
 	size_t		player_count;
 	int			fd;
+	t_game		*game;
 }			t_file;
 
 typedef struct s_game
@@ -159,20 +163,48 @@ void			init_player(t_game *game);
 int				main(int argc, char **argv);
 
 /**********parsing.c***********/
-void		check_file_extension(char *filename);
-void		check_texture_file_extension(char *filename);
-void		check_file_existence(t_file *file);
-void    	convert_file_to_tab(t_file *file);
-void    	get_map_height(t_file *file);
-void    	check_map_content(t_file *file);
-void    	init_file(t_file *file, char *filename);
-size_t		check_map_element(t_file *file, size_t x, size_t y);
-int     	check_file(t_file *file, t_textures *texture, int argc, char *filename);
-int		element_find(t_file *file, size_t n);
-size_t		skip_space(char *str);
-size_t		back_space(char	*str);
-size_t		skip_empty_line(t_file *file, size_t i);
-size_t    	check_element(t_file *file,t_textures *texture, size_t i);
+size_t			check_file(t_file *file, t_textures *texture,
+					int argc, char *filename);
+void			convert_file_to_tab(t_file *file);
+void			init_file(t_file *file, char *filename);
+
+/*********file_parsing.c*********/
+size_t			check_element(t_file *file, t_textures *texture, size_t i);
+void			get_file_height(t_file *file);
+void			check_file_existence(t_file *file);
+void			check_file_extension(char *filename);
+void			check_file_content(t_game *game, t_file *file,
+					t_textures *textures);
+
+/**********map_parsing.c***********/
+char			get_map_char(t_file *file, int x, int y);
+size_t			check_map_element(t_file *file, size_t x, size_t y);
+void			check_map_content(t_game *game, t_file *file);
+size_t			check_map_closed(t_file *file);
+void			convert_map_to_tab(t_file *file, size_t height);
+
+/**********textures_parsing.c********/
+void			init_textures(t_textures *textures);
+void			check_texture_file_existence(char *path);
+void			check_texture_file_extension(char *filename);
+void			fill_textures_filename(t_textures *textures,
+					char *str, char *id);
+
+/**********rgb_parsing.c***********/
+size_t			check_rgb_range(int r, int g, int b);
+size_t			check_rgb(t_file *file, t_textures *textures,
+					size_t y, size_t x);
+void			fill_rgb(t_textures *textures, char *str, char *id);
+
+/***********player_parsing.c*********/
+void	check_player_position(t_game *game, size_t x, size_t y);
+
+/**********utils_parsing.c***********/
+size_t			skip_space(char *str);
+size_t			back_space(char	*str);
+size_t			is_floor_or_player(char c);
+size_t			skip_empty_line(t_file *file, size_t i);
+int				element_find(t_file *file, size_t n);
 
 /**********utils_cub3d.c**********/
 t_game			*get_game_ptr(t_game *ptr);
@@ -222,7 +254,7 @@ void			initialize_column(t_game *game,
 void			calculate_what_to_display(t_game *game,
 					t_raycasting *ray, t_column *column);
 /*****************free.c***************/
- void    free_parsing_data(t_game *game);
- void    free_mlx_data(t_game *game);
- void    free_game_data(t_game *game);
+void			free_parsing_data(t_game *game);
+void			free_mlx_data(t_game *game);
+void			free_game_data(t_game *game);
 #endif

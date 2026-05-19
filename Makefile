@@ -6,7 +6,7 @@
 #    By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/28 17:01:03 by acohaut           #+#    #+#              #
-#    Updated: 2026/05/15 14:16:46 by acohaut          ###   ########.fr        #
+#    Updated: 2026/05/18 15:33:00 by nofelten         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,13 @@ SRCS		= 	srcs/main.c \
 				srcs/utils_cub3d.c \
 				srcs/test_mlx.c \
 				srcs/error.c \
-				srcs/parsing.c \
+				srcs/parsing/parsing.c \
+				srcs/parsing/file_parsing.c \
+				srcs/parsing/map_parsing.c \
+				srcs/parsing/textures_parsing.c \
+				srcs/parsing/rgb_parsing.c \
+				srcs/parsing/player_parsing.c \
+				srcs/parsing/utils_parsing.c \
 				srcs/utils_raycasting.c \
 				srcs/free.c \
 

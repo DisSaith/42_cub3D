@@ -6,7 +6,7 @@
 /*   By: nofelten <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 11:17:34 by nofelten          #+#    #+#             */
-/*   Updated: 2025/09/16 09:26:05 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/18 16:01:40 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_strncpy(char *dest, char *src, unsigned int n)
 		{
 			dest[j] = '\0';
 		}
-	j++;
+		j++;
 	}
 	return (dest);
 }
