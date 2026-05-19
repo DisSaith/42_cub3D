@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/19 15:41:03 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/19 17:36:54 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@
  */
 int	close_game(t_game *game)
 {
+	free_parsing_data(game);
 	if (game->buffer.mlx_img)
 		mlx_destroy_image(game->mlx, game->buffer.mlx_img);
+	if (game->mini_map.img.mlx_img)
+		mlx_destroy_image(game->mlx, game->mini_map.img.mlx_img);
 	if (game->textures.north.mlx_img)
 		mlx_destroy_image(game->mlx, game->textures.north.mlx_img);
 	if (game->textures.south.mlx_img)
@@ -64,17 +67,17 @@ int	initialisation_game(t_game *game)
 {
 	game->mlx = mlx_init();
 	if (!game->mlx)
-		return (0);
+		error_exit("error: mlx init");
 	game->window = mlx_new_window(game->mlx,
 			WIDTH_WINDOW, HEIGHT_WINDOW, "cub3D");
 	if (!game->window)
-		return (0);
+		error_exit("error: mlx window");
 	if (!load_buffer(game))
-		return (0);
+		error_exit("error: loading buffer");
 	if (!load_mini_map(game))
-		return (0);
+		error_exit("error: loading minimap");
 	if (!load_textures(game))
-		return (0);
+		error_exit("error: loading textures");
 	init_player(game);
 	return (1);
 }
@@ -90,8 +93,7 @@ int	main(int argc, char **argv)
 	get_game_ptr(&game);
 	game.file.game = &game;
 	check_file(&game.file, &game.textures, argc, argv[1]);
-	if (!initialisation_game(&game))
-		close_game(&game);
+	initialisation_game(&game);
 	mlx_hook(game.window, 2, 1 << 0, (int (*)())(void *)key_press, &game);
 	mlx_hook(game.window, 3, 1 << 1, (int (*)())(void *)key_release, &game);
 	mlx_hook(game.window, 17, 1 << 0, (int (*)())(void *)close_game, &game);

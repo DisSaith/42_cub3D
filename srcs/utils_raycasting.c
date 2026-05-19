@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/11 13:15:34 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/19 14:15:57 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/19 17:40:54 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,10 +163,10 @@ void	calculate_what_to_display(t_game *game, t_raycasting *ray,
 		column->tex_x = TILE_SIZE - column->tex_x - 1;
 	if (ray->side == 1 && ray->raydir_y > 0)
 		column->tex_x = TILE_SIZE - column->tex_x - 1;
-	mini_map->wall_x_g = game->player.pos_x +
-		(ray->raydir_x * ray->walldist * TILE_SIZE);
-	mini_map->wall_y_g = game->player.pos_y +
-		(ray->raydir_y * ray->walldist * TILE_SIZE);
+	mini_map->wall_x_g = game->player.pos_x
+		+ (ray->raydir_x * ray->walldist * TILE_SIZE);
+	mini_map->wall_y_g = game->player.pos_y
+		+ (ray->raydir_y * ray->walldist * TILE_SIZE);
 	mini_map->wall_x = (int)((mini_map->wall_x_g * mini_map->img.width)
 			/ (game->file.map_width * TILE_SIZE));
 	mini_map->wall_y = (int)((mini_map->wall_y_g * mini_map->img.height)

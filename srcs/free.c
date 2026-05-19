@@ -6,7 +6,7 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 14:58:30 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/17 15:01:01 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/19 17:39:01 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ void	free_parsing_data(t_game *game)
 		free(game->textures.path_ea);
 	if (game->textures.path_we)
 		free(game->textures.path_we);
-	if (game->file.fd > 0)
-		close(game->file.fd);
 }
 
 void	free_mlx_data(t_game *game)
 {
 	if (game->buffer.mlx_img)
 		mlx_destroy_image(game->mlx, game->buffer.mlx_img);
+	if (game->mini_map.img.mlx_img)
+		mlx_destroy_image(game->mlx, game->mini_map.img.mlx_img);
 	if (game->textures.north.mlx_img)
 		mlx_destroy_image(game->mlx, game->textures.north.mlx_img);
 	if (game->textures.south.mlx_img)
@@ -50,7 +50,10 @@ void	free_mlx_data(t_game *game)
 	if (game->textures.east.mlx_img)
 		mlx_destroy_image(game->mlx, game->textures.east.mlx_img);
 	if (game->window)
+	{
 		mlx_destroy_window(game->mlx, game->window);
+		game->window = NULL;
+	}
 	if (game->mlx)
 	{
 		mlx_destroy_display(game->mlx);

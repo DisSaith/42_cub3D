@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/19 14:59:46 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/19 17:40:04 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,10 @@ void	raycasting(t_game *game)
  */
 int	rendering(t_game *game)
 {
-	ft_bzero(game->buffer.addr, game->buffer.line_len * game->buffer.height);
-	ft_bzero(game->mini_map.img.addr, game->mini_map.img.line_len * game->mini_map.img.height);
+	ft_bzero(game->buffer.addr,
+		game->buffer.line_len * game->buffer.height);
+	ft_bzero(game->mini_map.img.addr,
+		game->mini_map.img.line_len * game->mini_map.img.height);
 	move_player(game);
 	draw_minimap(game);
 	raycasting(game);

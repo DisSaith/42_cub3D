@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/19 15:20:52 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/19 17:36:13 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,27 +59,26 @@ int	load_mini_map(t_game *game)
 /*
  * Load and initialise every texture for the game
  */
-/* Remplace load_textures */
 int	load_textures(t_game *game)
 {
 	if (!load_xpm(game, &game->textures.north, game->textures.path_no))
 	{
-		printf("Error\nEchec texture NO: %s\n", game->textures.path_no);
+		printf("error: loading texture NO: %s\n", game->textures.path_no);
 		return (0);
 	}
 	if (!load_xpm(game, &game->textures.south, game->textures.path_so))
 	{
-		printf("Error\nEchec texture SO: %s\n", game->textures.path_so);
+		printf("error: loading texture SO: %s\n", game->textures.path_so);
 		return (0);
 	}
 	if (!load_xpm(game, &game->textures.east, game->textures.path_ea))
 	{
-		printf("Error\nEchec texture EA: %s\n", game->textures.path_ea);
+		printf("error: loading texture EA: %s\n", game->textures.path_ea);
 		return (0);
 	}
 	if (!load_xpm(game, &game->textures.west, game->textures.path_we))
 	{
-		printf("Error\nEchec texture WE: %s\n", game->textures.path_we);
+		printf("error: loading texture WE: %s\n", game->textures.path_we);
 		return (0);
 	}
 	return (1);
