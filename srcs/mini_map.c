@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/19 15:11:32 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/19 17:47:02 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ void	draw_player_square(t_game *game,
 
 	y = 0;
 	mini_map->player_x = (int)((game->player.pos_x * game->mini_map.img.width)
-			/ (TILE_SIZE * game->file.map_width));
+			/ (TILE_SIZE * game->file.width));
 	mini_map->player_y = (int)((game->player.pos_y * game->mini_map.img.height)
-			/ (TILE_SIZE * game->file.map_height));
+			/ (TILE_SIZE * game->file.height));
 	while (y < 4)
 	{
 		x = 0;
@@ -118,20 +118,20 @@ void	draw_a_block(t_game *game,
 void	draw_minimap(t_game *game)
 {
 	t_mini_map	*mini;
-	int			x;
-	int			y;
+	size_t		x;
+	size_t		y;
 
 	mini = &game->mini_map;
 	y = 0;
-	while (y < game->file.map_height)
+	while (y < game->file.height)
 	{
-		mini->y_start = (y * mini->img.height) / game->file.map_height;
-		mini->y_end = ((y + 1) * mini->img.height) / game->file.map_height;
+		mini->y_start = (y * mini->img.height) / game->file.height;
+		mini->y_end = ((y + 1) * mini->img.height) / game->file.height;
 		x = 0;
-		while (x < game->file.map_width)
+		while (x < game->file.width)
 		{
-			mini->x_start = (x * mini->img.width) / game->file.map_width;
-			mini->x_end = ((x + 1) * mini->img.width) / game->file.map_width;
+			mini->x_start = (x * mini->img.width) / game->file.width;
+			mini->x_end = ((x + 1) * mini->img.width) / game->file.width;
 			if (game->file.map[y][x] == '1')
 				draw_a_block(game, mini, RED);
 			else

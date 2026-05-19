@@ -6,7 +6,7 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 15:31:34 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/19 17:22:40 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/19 17:44:48 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,11 @@ void	check_file_content(t_game *game, t_file *file, t_textures *textures)
 	}
 	y = skip_empty_line(file, y);
 	convert_map_to_tab(file, y);
+	get_map_dimensions(file);
 	check_map_content(game, file);
 	if (!check_map_closed(file))
 		error_exit("La map n'est pas fermee par des murs !");
+	replace_spaces_with_walls(file);
 }
 
 size_t	check_element(t_file *file, t_textures *textures, size_t y)
@@ -103,7 +105,6 @@ size_t	check_element(t_file *file, t_textures *textures, size_t y)
 		fill_textures_filename(textures, file->file_content[y], "EA");
 		return (file->ea = 1, 1);
 	}
-	else if (check_rgb(file, textures, y, x))
-		return (0);
-	return (0);
+	else
+		return (check_rgb(file, textures, y, x), 0);
 }
