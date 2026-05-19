@@ -6,13 +6,12 @@
 #    By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/28 17:01:03 by acohaut           #+#    #+#              #
-#    Updated: 2026/05/18 15:33:00 by nofelten         ###   ########.fr        #
+#    Updated: 2026/05/19 14:21:38 by acohaut          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		= cc
-CFLAGS		= -g
-#CFLAGS		= -Wall -Wextra -Werror -g
+CFLAGS		= -Wall -Wextra -Werror -g
 NAME		= cub3D
 INCLUDES	= -I includes -I./libft
 
@@ -20,11 +19,11 @@ LIBFT		= libft/libft.a
 
 SRCS		= 	srcs/main.c \
 				srcs/rendering.c \
+				srcs/mini_map.c \
 				srcs/load_textures.c \
 				srcs/key_manager.c \
 				srcs/move_player.c \
 				srcs/utils_cub3d.c \
-				srcs/test_mlx.c \
 				srcs/error.c \
 				srcs/parsing/parsing.c \
 				srcs/parsing/file_parsing.c \

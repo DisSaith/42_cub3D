@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/19 14:46:39 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/19 15:41:03 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,10 @@ int	close_game(t_game *game)
  */
 void	init_player(t_game *game)
 {
-	game->player.pos_x = 15 * 64;
-	game->player.pos_y = 10 * 64;
 	game->player.dir_x = 0;
 	game->player.dir_y = -1;
 	game->player.plan_x = 0.66;
 	game->player.plan_y = 0;
-	game->player.angle = PI / 2;
 	game->player.w_press = false;
 	game->player.s_press = false;
 	game->player.d_press = false;
@@ -73,6 +70,8 @@ int	initialisation_game(t_game *game)
 	if (!game->window)
 		return (0);
 	if (!load_buffer(game))
+		return (0);
+	if (!load_mini_map(game))
 		return (0);
 	if (!load_textures(game))
 		return (0);

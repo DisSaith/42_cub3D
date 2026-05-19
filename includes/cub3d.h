@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/19 15:06:21 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/19 15:20:42 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,13 @@
 
 # define TILE_SIZE 64
 
-# define WIDTH_WINDOW 640
-# define HEIGHT_WINDOW 640
-
-# define PI 3.14159265359
+# define WIDTH_WINDOW 1280
+# define HEIGHT_WINDOW 720
 
 # define GREEN 0x0000FF00
 # define RED 0x00FF0000
 # define BLUE 0x000000FF
+# define YELLOW 0x00FFFF00
 # define TRANSPARENT 0xFF000000
 
 # define CEILING_COLOR  0x00383838
@@ -99,7 +98,6 @@ typedef struct s_player
 	double	dir_y;
 	double	plan_x;
 	double	plan_y;
-	double	angle;
 	char	cardinal_point;
 	bool	w_press;
 	bool	s_press;
@@ -138,10 +136,41 @@ typedef struct s_file
 	size_t		we;
 	size_t		f;
 	size_t		c;
+	int			map_height;
+	int			map_width;
 	size_t		player_count;
 	int			fd;
 	t_game		*game;
 }			t_file;
+
+typedef struct s_line
+{
+	int		x_start;
+	int		x_end;
+	int		y_start;
+	int		y_end;
+	int		delta_x;
+	int		delta_y;
+	int		sign_x;
+	int		sign_y;
+	int		error;
+	int		error_tmp;
+}				t_line;
+
+typedef struct s_mini_map
+{
+	t_img	img;
+	double	wall_x_g;
+	double	wall_y_g;
+	int		wall_x;
+	int		wall_y;
+	int		x_start;
+	int		x_end;
+	int		y_start;
+	int		y_end;
+	int		player_x;
+	int		player_y;
+}			t_mini_map;
 
 typedef struct s_game
 {
@@ -149,6 +178,7 @@ typedef struct s_game
 	t_textures	textures;
 	t_player	player;
 	t_file		file;
+	t_mini_map	mini_map;
 	void		*mlx;
 	void		*window;
 }			t_game;
@@ -224,6 +254,12 @@ void			move_vertical(t_game *game, double speed);
 void			move_horizontal(t_game *game, double speed);
 void			move_player(t_game *game);
 
+/**********load_textures.c**********/
+int				load_buffer(t_game *game);
+int				load_mini_map(t_game *game);
+int				load_textures(t_game *game);
+int				load_xpm(t_game *game, t_img *img, char *path);
+
 /**********rendering.c**********/
 void			my_mlx_pixel_put(t_img *img, int x, int y, unsigned int pixel);
 void			draw_column(t_game *game, t_raycasting *ray,
@@ -232,27 +268,24 @@ void			draw_sprite(t_game *game, t_img *sprite, int x, int y);
 void			raycasting(t_game *game);
 int				rendering(t_game *game);
 
-/**********load_textures.c**********/
-int				load_buffer(t_game *game);
-int				load_textures(t_game *game);
-int				load_xpm(t_game *game, t_img *img, char *path);
-
-/**********test_mlx.c**********/
-void			draw_a_line(t_game *game, int x, int y);
-void			draw_background(t_game *game, int color);
-int				touch(t_game *game, double x, double y);
-int				check_collision_2d(t_game *game, float speed);
-void			move_player_2d(t_game *game);
-int				rendering_2d(t_game *game);
-
 /**********utils_raycasting.c**********/
 void			initialize_ray1(t_game *game, t_raycasting *ray);
-void			initialize_ray2(t_game *game, t_raycasting *ray);
+void			initialize_ray2(t_raycasting *ray);
 void			perform_dda_algorithme(t_game *game, t_raycasting *ray);
 void			initialize_column(t_game *game,
 					t_raycasting *ray, t_column *column);
-void			calculate_what_to_display(t_game *game,
-					t_raycasting *ray, t_column *column);
+void			calculate_what_to_display(t_game *game, t_raycasting *ray,
+					t_column *column, t_mini_map *mini_map);
+
+/**********mini_map.c**********/
+void			initialize_line(t_game *game, t_line *line);
+void			draw_line_minimap(t_game *game);
+void			draw_player_square(t_game *game,
+					t_mini_map *mini_map, unsigned int color);
+void			draw_a_block(t_game *game,
+					t_mini_map *mini_map, unsigned int color);
+void			draw_minimap(t_game *game);
+
 /*****************free.c***************/
 void			free_parsing_data(t_game *game);
 void			free_mlx_data(t_game *game);

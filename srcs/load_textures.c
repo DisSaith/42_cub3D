@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/18 16:03:46 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/19 15:20:52 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,23 @@ int	load_buffer(t_game *game)
 			&game->buffer.endian);
 	game->buffer.width = WIDTH_WINDOW;
 	game->buffer.height = HEIGHT_WINDOW;
+	return (1);
+}
+
+int	load_mini_map(t_game *game)
+{
+	game->file.map_height = 10;
+	game->file.map_width = 10;
+	game->mini_map.img.width = 160;
+	game->mini_map.img.height = 160;
+	game->mini_map.img.mlx_img = mlx_new_image(game->mlx,
+			game->mini_map.img.width, game->mini_map.img.height);
+	if (!game->mini_map.img.mlx_img)
+		return (0);
+	game->mini_map.img.addr = mlx_get_data_addr(game->mini_map.img.mlx_img,
+			&game->mini_map.img.bits_per_pixels,
+			&game->mini_map.img.line_len,
+			&game->mini_map.img.endian);
 	return (1);
 }
 

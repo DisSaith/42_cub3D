@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/11 13:15:34 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/15 15:28:02 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/19 14:15:57 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	initialize_ray1(t_game *game, t_raycasting *ray)
  * Step_x/_y are what direction to step in x or y direction (either -1 or 1)
  * Sidedist_x/_y are the first length from start position to next x or y_side
  */
-void	initialize_ray2(t_game *game, t_raycasting *ray)
+void	initialize_ray2(t_raycasting *ray)
 {
 	if (ray->raydir_x < 0)
 	{
@@ -142,9 +142,10 @@ void	initialize_column(t_game *game, t_raycasting *ray, t_column *column)
  * Calculate distance between player and the wall before calculate
  * the height line to draw on screen. After that we calculate the highest
  * and lowest pixels to fill in the current column
+ * At the end we calculate the ray to display in the mini_map
  */
-void	calculate_what_to_display(t_game *game,
-			t_raycasting *ray, t_column *column)
+void	calculate_what_to_display(t_game *game, t_raycasting *ray,
+			t_column *column, t_mini_map *mini_map)
 {
 	if (ray->side == 0)
 		ray->walldist = ray->sidedist_x - ray->deltadist_x;
@@ -162,4 +163,12 @@ void	calculate_what_to_display(t_game *game,
 		column->tex_x = TILE_SIZE - column->tex_x - 1;
 	if (ray->side == 1 && ray->raydir_y > 0)
 		column->tex_x = TILE_SIZE - column->tex_x - 1;
+	mini_map->wall_x_g = game->player.pos_x +
+		(ray->raydir_x * ray->walldist * TILE_SIZE);
+	mini_map->wall_y_g = game->player.pos_y +
+		(ray->raydir_y * ray->walldist * TILE_SIZE);
+	mini_map->wall_x = (int)((mini_map->wall_x_g * mini_map->img.width)
+			/ (game->file.map_width * TILE_SIZE));
+	mini_map->wall_y = (int)((mini_map->wall_y_g * mini_map->img.height)
+			/ (game->file.map_height * TILE_SIZE));
 }

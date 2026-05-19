@@ -6,7 +6,7 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 15:31:34 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/19 14:08:26 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/19 15:23:09 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,5 @@ size_t	check_element(t_file *file, t_textures *textures, size_t y)
 	}
 	else if (check_rgb(file, textures, y, x))
 		return (0);
+	return (0);
 }

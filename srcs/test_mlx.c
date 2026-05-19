@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/15 12:59:38 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/19 11:08:02 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	draw_a_line(t_game *game, int x, int y)
 	delta_y /= pixels;
 	while (pixels > 0)
 	{
-		my_mlx_pixel_put(&game->buffer, pixel_x, pixel_y, RED);
+		my_mlx_pixel_put(&game->mini_map.mlx, pixel_x, pixel_y, RED);
 		pixel_x += delta_x;
 		pixel_y += delta_y;
 		--pixels;
