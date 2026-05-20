@@ -6,7 +6,7 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 14:58:30 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/19 17:39:01 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 11:49:47 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,12 @@ void	free_parsing_data(t_game *game)
 		free(game->file.file_content);
 	}
 	if (game->file.map)
+	{
+		i = 0;
+		while (game->file.map[i])
+			free(game->file.map[i++]);
 		free(game->file.map);
+	}
 	if (game->textures.path_no)
 		free(game->textures.path_no);
 	if (game->textures.path_so)

@@ -6,7 +6,7 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 13:47:04 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/20 11:41:08 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/20 11:50:44 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	replace_spaces_with_walls(t_file *file)
 		new_line = malloc(sizeof(char) * (file->width + 1));
 		if (!new_line)
 			error_exit("Malloc de la map rectangulaire échoué");
-		
 		ft_memset(new_line, '1', file->width);
 		new_line[file->width] = '\0';
 		x = 0;
