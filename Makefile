@@ -6,7 +6,7 @@
 #    By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/28 17:01:03 by acohaut           #+#    #+#              #
-#    Updated: 2026/05/20 15:33:21 by acohaut          ###   ########.fr        #
+#    Updated: 2026/05/20 16:58:58 by acohaut          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRCS_BONUS =	srcs/bonus/main_bonus.c \
 				srcs/bonus/free_bonus.c \
 				srcs/bonus/initialize_game_bonus.c \
 				srcs/bonus/key_manager_bonus.c \
+				srcs/bonus/move_player_bonus.c \
 				srcs/parsing/parsing.c \
 				srcs/parsing/file_parsing.c \
 				srcs/parsing/map_parsing.c \
@@ -52,9 +53,9 @@ SRCS_BONUS =	srcs/bonus/main_bonus.c \
 				srcs/parsing/utils_parsing.c \
 				srcs/rendering/load_textures.c \
 				srcs/utilities/utils_cub3d.c \
-				srcs/utilities/move_player.c \
 				srcs/utilities/error.c \
 				srcs/utilities/free.c \
+				srcs/utilities/move_player.c \
 
 OBJS		= $(SRCS:srcs/%.c=objs/%.o)
 

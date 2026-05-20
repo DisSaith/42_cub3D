@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 15:34:06 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 17:23:29 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define ESC_KEY 65307
 # define LEFT_KEY 65361
 # define RIGHT_KEY 65363
+# define SHIFT_R_KEY 65505
 
 # define TILE_SIZE 64
 
@@ -93,6 +94,8 @@ typedef struct s_player
 	double	dir_y;
 	double	plan_x;
 	double	plan_y;
+	int		mouse_x;
+	int		mouse_y;
 	char	cardinal_point;
 	bool	w_press;
 	bool	s_press;
@@ -100,6 +103,7 @@ typedef struct s_player
 	bool	a_press;
 	bool	right_press;
 	bool	left_press;
+	bool	shift_r_press;
 }			t_player;
 
 typedef struct s_textures
@@ -297,7 +301,7 @@ void			raycasting_b(t_game *game);
 int				rendering_b(t_game *game);
 //initialize_game_bonus.c
 int				initialisation_game_b(t_game *game);
-void			init_player(t_game *game);
+void			init_player_b(t_game *game);
 //free_bonus.c
 int				close_game_b(t_game *game);
 void			free_mlx_data_b(t_game *game);
@@ -305,6 +309,9 @@ void			free_game_data_b(t_game *game);
 void			error_exit_b(char *error_message);
 //key_manager_bonus.c
 int				key_press_b(int keycode, t_game *game);
-int				key_release(int keycode, t_game *game);
+int				key_release_b(int keycode, t_game *game);
+//move_player_bonus.c
+void			rotate_fov_b(t_game *game, double rotation);
+void			move_player_b(t_game *game);
 
 #endif

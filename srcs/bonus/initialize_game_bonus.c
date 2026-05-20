@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 15:24:41 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 17:22:24 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,17 @@
 /*
  *Initialize player struct position and direction
  */
-void	init_player(t_game *game)
+void	init_player_b(t_game *game)
 {
+	mlx_mouse_get_pos(game->mlx, game->window,
+		&game->player.mouse_x, &game->player.mouse_y);
 	game->player.w_press = false;
 	game->player.s_press = false;
 	game->player.d_press = false;
 	game->player.a_press = false;
 	game->player.right_press = false;
 	game->player.left_press = false;
+	game->player.shift_r_press = false;
 }
 
 /*
@@ -43,6 +46,6 @@ int	initialisation_game_b(t_game *game)
 		error_exit_b("loading minimap");
 	if (!load_textures(game))
 		error_exit_b("loading textures");
-	init_player(game);
+	init_player_b(game);
 	return (1);
 }

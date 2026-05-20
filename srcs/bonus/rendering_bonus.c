@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 15:24:07 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 17:06:18 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,13 @@ void	raycasting_b(t_game *game)
  */
 int	rendering_b(t_game *game)
 {
+	mlx_mouse_get_pos(game->mlx, game->window,
+		&game->player.mouse_x, &game->player.mouse_y);
 	ft_bzero(game->buffer.addr,
 		game->buffer.line_len * game->buffer.height);
 	ft_bzero(game->mini_map.img.addr,
 		game->mini_map.img.line_len * game->mini_map.img.height);
-	move_player(game);
+	move_player_b(game);
 	draw_minimap(game);
 	raycasting_b(game);
 	mlx_put_image_to_window(game->mlx, game->window,

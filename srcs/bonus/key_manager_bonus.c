@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 15:30:33 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 17:24:23 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
  *	[FILE DESCRIPTION]
  * Function needed to catch key press/release :
  *
- * int	key_press(int keycode, t_game *game);
- * int	key_release(int keycode, t_game *game);
+ * int	key_press_b(int keycode, t_game *game);
+ * int	key_release_b(int keycode, t_game *game);
  */
 
 /*
@@ -27,6 +27,11 @@ int	key_press_b(int keycode, t_game *game)
 {
 	if (keycode == ESC_KEY)
 		close_game_b(game);
+	if (keycode == SHIFT_R_KEY)
+	{
+		mlx_mouse_show(game->mlx, game->window);
+		game->player.shift_r_press = true;
+	}
 	if (keycode == W_KEY)
 		game->player.w_press = true;
 	if (keycode == S_KEY)
@@ -45,8 +50,13 @@ int	key_press_b(int keycode, t_game *game)
 /*
  *Capture every release on the keyboard (W, S, D, A)
  */
-int	key_release(int keycode, t_game *game)
+int	key_release_b(int keycode, t_game *game)
 {
+	if (keycode == SHIFT_R_KEY)
+	{
+		mlx_mouse_hide(game->mlx, game->window);
+		game->player.shift_r_press = false;
+	}
 	if (keycode == W_KEY)
 		game->player.w_press = false;
 	if (keycode == S_KEY)
