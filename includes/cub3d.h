@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 12:55:50 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 15:34:06 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,15 +253,13 @@ void			error_exit(char *error_message);
 /**********RENDERING***********/
 //
 //load_textures.c
-int				load_buffer(t_game *game);
-int				load_mini_map(t_game *game);
+int				load_img(t_game *game, t_img *img, int width, int height);
 int				load_textures(t_game *game);
 int				load_xpm(t_game *game, t_img *img, char *path);
 //rendering.c
 void			my_mlx_pixel_put(t_img *img, int x, int y, unsigned int pixel);
 void			draw_column(t_game *game, t_raycasting *ray,
 					t_column *column, int x);
-void			draw_sprite(t_game *game, t_img *sprite, int x, int y);
 void			raycasting(t_game *game);
 int				rendering(t_game *game);
 //raycasting.c
@@ -271,8 +269,19 @@ void			perform_dda_algorithme(t_game *game, t_raycasting *ray);
 void			initialize_column(t_game *game,
 					t_raycasting *ray, t_column *column);
 void			calculate_what_to_display(t_game *game, t_raycasting *ray,
+					t_column *column);
+
+/**********BONUS***********/
+//
+//raycasting_bonus.c
+void			initialize_ray1(t_game *game, t_raycasting *ray);
+void			initialize_ray2(t_raycasting *ray);
+void			perform_dda_algorithme(t_game *game, t_raycasting *ray);
+void			initialize_column(t_game *game,
+					t_raycasting *ray, t_column *column);
+void			calculate_what_to_display_b(t_game *game, t_raycasting *ray,
 					t_column *column, t_mini_map *mini_map);
-//mini_map.c
+//minimap_bonus.c
 void			initialize_line(t_game *game, t_line *line);
 void			draw_line_minimap(t_game *game);
 void			draw_player_square(t_game *game,
@@ -280,5 +289,22 @@ void			draw_player_square(t_game *game,
 void			draw_a_block(t_game *game,
 					t_mini_map *mini_map, unsigned int color);
 void			draw_minimap(t_game *game);
+//rendering_bonus.c
+void			my_mlx_pixel_put(t_img *img, int x, int y, unsigned int pixel);
+void			draw_column(t_game *game, t_raycasting *ray,
+					t_column *column, int x);
+void			raycasting_b(t_game *game);
+int				rendering_b(t_game *game);
+//initialize_game_bonus.c
+int				initialisation_game_b(t_game *game);
+void			init_player(t_game *game);
+//free_bonus.c
+int				close_game_b(t_game *game);
+void			free_mlx_data_b(t_game *game);
+void			free_game_data_b(t_game *game);
+void			error_exit_b(char *error_message);
+//key_manager_bonus.c
+int				key_press_b(int keycode, t_game *game);
+int				key_release(int keycode, t_game *game);
 
 #endif

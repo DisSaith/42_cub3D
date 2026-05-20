@@ -1,55 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 14:58:30 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/20 14:48:20 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 15:34:23 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
 /*
- * Free and destroy parsing data
- */
-void	free_parsing_data(t_game *game)
-{
-	int	i;
-
-	if (game->file.file_content)
-	{
-		i = 0;
-		while (game->file.file_content[i])
-			free(game->file.file_content[i++]);
-		free(game->file.file_content);
-	}
-	if (game->file.map)
-	{
-		i = 0;
-		while (game->file.map[i])
-			free(game->file.map[i++]);
-		free(game->file.map);
-	}
-	if (game->textures.path_no)
-		free(game->textures.path_no);
-	if (game->textures.path_so)
-		free(game->textures.path_so);
-	if (game->textures.path_ea)
-		free(game->textures.path_ea);
-	if (game->textures.path_we)
-		free(game->textures.path_we);
-}
-
-/*
  * Free and destroy mlx data
  */
-void	free_mlx_data(t_game *game)
+void	free_mlx_data_b(t_game *game)
 {
 	if (game->buffer.mlx_img)
 		mlx_destroy_image(game->mlx, game->buffer.mlx_img);
+	if (game->mini_map.img.mlx_img)
+		mlx_destroy_image(game->mlx, game->mini_map.img.mlx_img);
 	if (game->textures.north.mlx_img)
 		mlx_destroy_image(game->mlx, game->textures.north.mlx_img);
 	if (game->textures.south.mlx_img)
@@ -73,22 +44,24 @@ void	free_mlx_data(t_game *game)
 /*
  * Call all functions to free and clean data
  */
-void	free_game_data(t_game *game)
+void	free_game_data_b(t_game *game)
 {
 	if (!game)
 		return ;
 	free_parsing_data(game);
-	free_mlx_data(game);
+	free_mlx_data_b(game);
 }
 
 /*
  *Free, destroy and close everything for no leaks before exit
  */
-int	close_game(t_game *game)
+int	close_game_b(t_game *game)
 {
 	free_parsing_data(game);
 	if (game->buffer.mlx_img)
 		mlx_destroy_image(game->mlx, game->buffer.mlx_img);
+	if (game->mini_map.img.mlx_img)
+		mlx_destroy_image(game->mlx, game->mini_map.img.mlx_img);
 	if (game->textures.north.mlx_img)
 		mlx_destroy_image(game->mlx, game->textures.north.mlx_img);
 	if (game->textures.south.mlx_img)
@@ -108,4 +81,19 @@ int	close_game(t_game *game)
 		free(game->mlx);
 	}
 	exit(0);
+}
+
+/*
+ * Free all data and display error message
+ */
+void	error_exit_b(char *error_message)
+{
+	size_t	n;
+
+	free_game_data_b(get_game_ptr(NULL));
+	n = ft_strlen(error_message);
+	write(2, "Error\n", 7);
+	write(2, error_message, n);
+	write(2, "\n", 1);
+	exit(1);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialize_game.c                                  :+:      :+:    :+:   */
+/*   initialize_game_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 14:57:20 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 15:24:41 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,21 @@ void	init_player(t_game *game)
 /*
  *Initialize game struct and mlx struct for start the game
  */
-int	initialisation_game(t_game *game)
+int	initialisation_game_b(t_game *game)
 {
 	game->mlx = mlx_init();
 	if (!game->mlx)
-		error_exit("mlx init");
+		error_exit_b("mlx init");
 	game->window = mlx_new_window(game->mlx,
 			WIDTH_WINDOW, HEIGHT_WINDOW, "cub3D");
 	if (!game->window)
-		error_exit("mlx window");
+		error_exit_b("mlx window");
 	if (!load_img(game, &game->buffer, WIDTH_WINDOW, HEIGHT_WINDOW))
-		error_exit("loading buffer");
+		error_exit_b("loading buffer");
+	if (!load_img(game, &game->mini_map.img, 160, 160))
+		error_exit_b("loading minimap");
 	if (!load_textures(game))
-		error_exit("loading textures");
+		error_exit_b("loading textures");
 	init_player(game);
 	return (1);
 }
