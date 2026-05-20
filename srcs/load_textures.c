@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/19 17:51:06 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 11:33:46 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
  * Function needed to load xpm file before displaying it (rendering)
  *
  * int	load_buffer(t_game *game);
+ * int	load_mini_map(t_game *game)
  * int	load_textures(t_game *game);
  * int	load_xpm(t_game *game, t_img *img, char *path);
  */
@@ -39,6 +40,9 @@ int	load_buffer(t_game *game)
 	return (1);
 }
 
+/*
+ * Create and initialise image mini_map
+ */
 int	load_mini_map(t_game *game)
 {
 	game->mini_map.img.width = 160;
@@ -61,22 +65,22 @@ int	load_textures(t_game *game)
 {
 	if (!load_xpm(game, &game->textures.north, game->textures.path_no))
 	{
-		printf("error: loading texture NO: %s\n", game->textures.path_no);
+		printf("Error\nloading texture NO: %s\n", game->textures.path_no);
 		return (0);
 	}
 	if (!load_xpm(game, &game->textures.south, game->textures.path_so))
 	{
-		printf("error: loading texture SO: %s\n", game->textures.path_so);
+		printf("Error\nloading texture SO: %s\n", game->textures.path_so);
 		return (0);
 	}
 	if (!load_xpm(game, &game->textures.east, game->textures.path_ea))
 	{
-		printf("error: loading texture EA: %s\n", game->textures.path_ea);
+		printf("Error\nloading texture EA: %s\n", game->textures.path_ea);
 		return (0);
 	}
 	if (!load_xpm(game, &game->textures.west, game->textures.path_we))
 	{
-		printf("error: loading texture WE: %s\n", game->textures.path_we);
+		printf("Error\nloading texture WE: %s\n", game->textures.path_we);
 		return (0);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/15 18:03:23 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/20 11:32:49 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ unsigned int	get_pixel_from_img(t_img *img, int x, int y)
 	return (*(unsigned int *)pixel);
 }
 
+/*
+ * Create and return an color trgb in unsigned int
+ */
 unsigned int	create_trgb(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);

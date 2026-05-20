@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 11:51:25 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/20 11:52:29 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,17 @@ int	initialisation_game(t_game *game)
 {
 	game->mlx = mlx_init();
 	if (!game->mlx)
-		error_exit("error: mlx init");
+		error_exit("mlx init");
 	game->window = mlx_new_window(game->mlx,
 			WIDTH_WINDOW, HEIGHT_WINDOW, "cub3D");
 	if (!game->window)
-		error_exit("error: mlx window");
+		error_exit("mlx window");
 	if (!load_buffer(game))
-		error_exit("error: loading buffer");
+		error_exit("loading buffer");
 	if (!load_mini_map(game))
-		error_exit("error: loading minimap");
+		error_exit("loading minimap");
 	if (!load_textures(game))
-		error_exit("error: loading textures");
+		error_exit("loading textures");
 	init_player(game);
 	return (1);
 }
