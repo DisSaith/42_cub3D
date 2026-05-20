@@ -6,7 +6,7 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:59:18 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/18 15:01:45 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/20 12:18:15 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 size_t	check_rgb_range(int r, int g, int b)
 {
-	if ((r < 0 || r > 250)
-		|| (g < 0 || g > 250)
-		|| (b < 0 || b > 250))
-		return (1);
-	return (0);
+	if ((r < 0 || r > 255)
+		|| (g < 0 || g > 255)
+		|| (b < 0 || b > 255))
+		return (0);
+	return (1);
 }
 
 void	fill_rgb(t_textures *textures, char *str, char *id)
@@ -29,18 +29,18 @@ void	fill_rgb(t_textures *textures, char *str, char *id)
 	int		b;
 
 	start = 0;
-	while (!ft_isdigit(str[start]))
+	while (str[start] != '-' && !ft_isdigit(str[start]))
 		start++;
-	r = ft_atoi(&str[start]);
+	r = ft_atoi_cub3d(&str[start]);
 	while (str[start] != ',')
 		start++;
 	start++;
-	g = ft_atoi(&str[start]);
+	g = ft_atoi_cub3d(&str[start]);
 	while (str[start] != ',')
 		start++;
 	start++;
-	b = ft_atoi(&str[start]);
-	if (check_rgb_range(r, g, b))
+	b = ft_atoi_cub3d(&str[start]);
+	if (!check_rgb_range(r, g, b))
 		error_exit("Wrong rgb range");
 	if (ft_strncmp(id, "F", 2) == 0)
 		textures->floor = create_trgb(0, r, g, b);

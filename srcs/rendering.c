@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/19 17:40:04 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 11:50:36 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	draw_column(t_game *game, t_raycasting *ray, t_column *column, int x)
 {
 	int	y;
 
-	column->step = (double)column->texture->width / ray->lineheight;
+	column->step = (double)TILE_SIZE / ray->lineheight;
 	column->tex_pos = (ray->drawstart - HEIGHT_WINDOW / 2 + ray->lineheight / 2)
 		* column->step;
 	y = 0;

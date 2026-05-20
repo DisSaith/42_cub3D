@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 11:32:49 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 12:19:37 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,35 @@ unsigned int	get_pixel_from_img(t_img *img, int x, int y)
 unsigned int	create_trgb(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);
+}
+
+/*
+ * Modified atoi for cub3d
+ */
+int	ft_atoi_cub3d(const char *str)
+{
+	int	atoi;
+	int	sign;
+	int	i;
+
+	sign = 1;
+	atoi = 0;
+	i = 0;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			sign *= -1;
+		i++;
+	}
+	if (!ft_isdigit(str[i]))
+		return (-1);
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		atoi *= 10;
+		atoi += str[i] - 48;
+		i++;
+	}
+	return (atoi * sign);
 }

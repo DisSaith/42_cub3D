@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/19 17:42:15 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/20 12:15:13 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,7 @@ int				element_find(t_file *file, size_t n);
 t_game			*get_game_ptr(t_game *ptr);
 unsigned int	get_pixel_from_img(t_img *img, int x, int y);
 unsigned int	create_trgb(int t, int r, int g, int b);
+int				ft_atoi_cub3d(const char *str);
 
 /**********key_manager.c**********/
 int				key_press(int keycode, t_game *game);
@@ -291,4 +292,5 @@ void			draw_minimap(t_game *game);
 void			free_parsing_data(t_game *game);
 void			free_mlx_data(t_game *game);
 void			free_game_data(t_game *game);
+
 #endif
