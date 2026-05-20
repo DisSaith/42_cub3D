@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/19 10:55:21 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 11:08:20 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,8 @@ void	move_player(t_game *game)
 	double	speed;
 	double	rotation;
 
-	speed = 2.0;
-	rotation = 0.02;
+	speed = 5.0;
+	rotation = 0.05;
 	rotate_fov(game, rotation, game->player.dir_x, game->player.plan_x);
 	move_vertical(game, speed);
 	move_horizontal(game, speed);

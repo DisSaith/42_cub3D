@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/19 17:47:18 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/19 17:51:06 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ int	load_buffer(t_game *game)
 
 int	load_mini_map(t_game *game)
 {
-	//game->file.map_height = 10;
-	//game->file.map_width = 10;
 	game->mini_map.img.width = 160;
 	game->mini_map.img.height = 160;
 	game->mini_map.img.mlx_img = mlx_new_image(game->mlx,
