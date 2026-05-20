@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_map.c                                         :+:      :+:    :+:   */
+/*   minimap_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 11:39:06 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 15:24:25 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 /*
  *	[FILE DESCRIPTION]
@@ -25,6 +25,9 @@
  *	void	draw_minimap(t_game *game);
  */
 
+/*
+ * Initialisation of the line struct used by Brensenham algorithm
+ */
 void	initialize_line(t_game *game, t_line *line)
 {
 	line->x_start = game->mini_map.player_x;
@@ -46,7 +49,7 @@ void	initialize_line(t_game *game, t_line *line)
 }
 
 /*
- *
+ * Brensenham algorithm to draw a line between tow points' coordinates
  */
 void	draw_line_minimap(t_game *game)
 {
@@ -73,6 +76,9 @@ void	draw_line_minimap(t_game *game)
 	}
 }
 
+/*
+ * Draw a small square at the player coordinates
+ */
 void	draw_player_square(t_game *game,
 			t_mini_map *mini_map, unsigned int color)
 {
@@ -98,7 +104,7 @@ void	draw_player_square(t_game *game,
 }
 
 /*
- * Dessine un bloc aux coordonnées de pixels exactes (xs = x_start, xe = x_end)
+ * Draw a block with exact pixel coordinates (xs = x_start, xe = x_end)
  */
 void	draw_a_block(t_game *game,
 			t_mini_map *mini_map, unsigned int color)
@@ -119,6 +125,9 @@ void	draw_a_block(t_game *game,
 	}
 }
 
+/*
+ * Function to draw a minimap
+ */
 void	draw_minimap(t_game *game)
 {
 	t_mini_map	*mini;

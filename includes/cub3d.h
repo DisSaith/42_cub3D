@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 12:15:13 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 17:35:58 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define ESC_KEY 65307
 # define LEFT_KEY 65361
 # define RIGHT_KEY 65363
+# define SHIFT_R_KEY 65505
 
 # define TILE_SIZE 64
 
@@ -39,11 +40,6 @@
 # define BLUE 0x000000FF
 # define YELLOW 0x00FFFF00
 # define TRANSPARENT 0xFF000000
-
-# define CEILING_COLOR  0x00383838
-# define FLOOR_COLOR    0x00787060
-# define WALL_NS_COLOR  0x00CCCCCC
-# define WALL_EW_COLOR  0x00888888
 
 typedef struct s_img
 {
@@ -98,6 +94,8 @@ typedef struct s_player
 	double	dir_y;
 	double	plan_x;
 	double	plan_y;
+	int		mouse_x;
+	int		mouse_y;
 	char	cardinal_point;
 	bool	w_press;
 	bool	s_press;
@@ -105,6 +103,7 @@ typedef struct s_player
 	bool	a_press;
 	bool	right_press;
 	bool	left_press;
+	bool	shift_r_press;
 }			t_player;
 
 typedef struct s_textures
@@ -181,39 +180,31 @@ typedef struct s_game
 	void		*window;
 }			t_game;
 
-/************error.c**************/
-void			error_exit(char *error_message);
-
 /**********main.c**********/
-int				close_game(t_game *game);
-int				initialisation_game(t_game *game);
-void			init_player(t_game *game);
 int				main(int argc, char **argv);
 
-/**********parsing.c***********/
+/**********PARSING***********/
+//parsing.c
 size_t			check_file(t_file *file, t_textures *texture,
 					int argc, char *filename);
 void			convert_file_to_tab(t_file *file);
 void			init_file(t_file *file, char *filename);
 void			replace_spaces_with_walls(t_file *file);
 void			get_map_dimensions(t_file *file);
-
-/*********file_parsing.c*********/
+//file_parsing.c
 size_t			check_element(t_file *file, t_textures *texture, size_t i);
 void			get_file_height(t_file *file);
 void			check_file_existence(t_file *file);
 void			check_file_extension(char *filename);
 void			check_file_content(t_game *game, t_file *file,
 					t_textures *textures);
-
-/**********map_parsing.c***********/
+//map_parsing.c
 char			get_map_char(t_file *file, int x, int y);
 size_t			check_map_element(t_file *file, size_t x, size_t y);
 void			check_map_content(t_game *game, t_file *file);
 size_t			check_map_closed(t_file *file);
 void			convert_map_to_tab(t_file *file, size_t height);
-
-/**********textures_parsing.c********/
+//textures_parsing.c
 void			init_textures(t_textures *textures);
 void			check_texture_file_existence(char *path);
 void			check_texture_file_extension(char *filename);
@@ -225,29 +216,30 @@ size_t			check_rgb_range(int *rgb);
 size_t			check_rgb(t_file *file, t_textures *textures,
 					size_t y, size_t x);
 void			fill_rgb(t_textures *textures, char *str, char *id);
-
-/***********player_parsing.c*********/
+//player_parsing.c
 void			check_player_position(t_game *game, size_t x, size_t y);
 void			init_player_vector(t_game *game, char direction);
-
-/**********utils_parsing.c***********/
+//utils_parsing.c
 size_t			skip_space(char *str);
 size_t			back_space(char	*str);
 size_t			is_floor_or_player(char c);
 size_t			skip_empty_line(t_file *file, size_t i);
 int				element_find(t_file *file, size_t n);
 
-/**********utils_cub3d.c**********/
+/**********UTILITIES***********/
+//
+//initialize_game.c
+int				initialisation_game(t_game *game);
+void			init_player(t_game *game);
+//utils_cub3d.c
 t_game			*get_game_ptr(t_game *ptr);
 unsigned int	get_pixel_from_img(t_img *img, int x, int y);
 unsigned int	create_trgb(int t, int r, int g, int b);
 int				ft_atoi_cub3d(const char *str);
-
-/**********key_manager.c**********/
+//key_manager.c
 int				key_press(int keycode, t_game *game);
 int				key_release(int keycode, t_game *game);
-
-/**********move_player.c**********/
+//move_player.c
 int				check_collision(t_game *game, char direction,
 					double dir_x, double dir_y);
 void			rotate_fov(t_game *game, double rotation,
@@ -255,31 +247,46 @@ void			rotate_fov(t_game *game, double rotation,
 void			move_vertical(t_game *game, double speed);
 void			move_horizontal(t_game *game, double speed);
 void			move_player(t_game *game);
+//free.c
+int				close_game(t_game *game);
+void			free_parsing_data(t_game *game);
+void			free_mlx_data(t_game *game);
+void			free_game_data(t_game *game);
+//error.c
+void			error_exit(char *error_message);
 
-/**********load_textures.c**********/
-int				load_buffer(t_game *game);
-int				load_mini_map(t_game *game);
+/**********RENDERING***********/
+//
+//load_textures.c
+int				load_img(t_game *game, t_img *img, int width, int height);
 int				load_textures(t_game *game);
 int				load_xpm(t_game *game, t_img *img, char *path);
-
-/**********rendering.c**********/
+//rendering.c
 void			my_mlx_pixel_put(t_img *img, int x, int y, unsigned int pixel);
 void			draw_column(t_game *game, t_raycasting *ray,
 					t_column *column, int x);
-void			draw_sprite(t_game *game, t_img *sprite, int x, int y);
 void			raycasting(t_game *game);
 int				rendering(t_game *game);
-
-/**********utils_raycasting.c**********/
+//raycasting.c
 void			initialize_ray1(t_game *game, t_raycasting *ray);
 void			initialize_ray2(t_raycasting *ray);
 void			perform_dda_algorithme(t_game *game, t_raycasting *ray);
 void			initialize_column(t_game *game,
 					t_raycasting *ray, t_column *column);
 void			calculate_what_to_display(t_game *game, t_raycasting *ray,
-					t_column *column, t_mini_map *mini_map);
+					t_column *column);
 
-/**********mini_map.c**********/
+/**********BONUS***********/
+//
+//raycasting_bonus.c
+void			initialize_ray1(t_game *game, t_raycasting *ray);
+void			initialize_ray2(t_raycasting *ray);
+void			perform_dda_algorithme(t_game *game, t_raycasting *ray);
+void			initialize_column(t_game *game,
+					t_raycasting *ray, t_column *column);
+void			calculate_what_to_display_b(t_game *game, t_raycasting *ray,
+					t_column *column, t_mini_map *mini_map);
+//minimap_bonus.c
 void			initialize_line(t_game *game, t_line *line);
 void			draw_line_minimap(t_game *game);
 void			draw_player_square(t_game *game,
@@ -287,10 +294,25 @@ void			draw_player_square(t_game *game,
 void			draw_a_block(t_game *game,
 					t_mini_map *mini_map, unsigned int color);
 void			draw_minimap(t_game *game);
-
-/*****************free.c***************/
-void			free_parsing_data(t_game *game);
-void			free_mlx_data(t_game *game);
-void			free_game_data(t_game *game);
+//rendering_bonus.c
+void			my_mlx_pixel_put(t_img *img, int x, int y, unsigned int pixel);
+void			draw_column(t_game *game, t_raycasting *ray,
+					t_column *column, int x);
+void			raycasting_b(t_game *game);
+int				rendering_b(t_game *game);
+//initialize_game_bonus.c
+int				initialisation_game_b(t_game *game);
+void			init_player_b(t_game *game);
+//free_bonus.c
+int				close_game_b(t_game *game);
+void			free_mlx_data_b(t_game *game);
+void			free_game_data_b(t_game *game);
+void			error_exit_b(char *error_message);
+//key_manager_bonus.c
+int				key_press_b(int keycode, t_game *game);
+int				key_release_b(int keycode, t_game *game);
+//move_player_bonus.c
+void			rotate_fov_b(t_game *game, double rotation);
+void			move_player_b(t_game *game);
 
 #endif

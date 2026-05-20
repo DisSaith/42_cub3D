@@ -6,55 +6,35 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 11:33:46 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 14:58:28 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 /*
  *	[FILE DESCRIPTION]
  * Function needed to load xpm file before displaying it (rendering)
  *
- * int	load_buffer(t_game *game);
- * int	load_mini_map(t_game *game)
+ * int	load_img(t_game *game, t_img *img, int width, int height);
  * int	load_textures(t_game *game);
  * int	load_xpm(t_game *game, t_img *img, char *path);
  */
 
 /*
- * Create and initialise image buffer
+ * Create and initialise a mlx image
  */
-int	load_buffer(t_game *game)
+int	load_img(t_game *game, t_img *img, int width, int height)
 {
-	game->buffer.mlx_img = mlx_new_image(game->mlx,
-			WIDTH_WINDOW, HEIGHT_WINDOW);
-	if (!game->buffer.mlx_img)
+	img->width = width;
+	img->height = height;
+	img->mlx_img = mlx_new_image(game->mlx, img->width, img->height);
+	if (!img->mlx_img)
 		return (0);
-	game->buffer.addr = mlx_get_data_addr(game->buffer.mlx_img,
-			&game->buffer.bits_per_pixels,
-			&game->buffer.line_len,
-			&game->buffer.endian);
-	game->buffer.width = WIDTH_WINDOW;
-	game->buffer.height = HEIGHT_WINDOW;
-	return (1);
-}
-
-/*
- * Create and initialise image mini_map
- */
-int	load_mini_map(t_game *game)
-{
-	game->mini_map.img.width = 160;
-	game->mini_map.img.height = 160;
-	game->mini_map.img.mlx_img = mlx_new_image(game->mlx,
-			game->mini_map.img.width, game->mini_map.img.height);
-	if (!game->mini_map.img.mlx_img)
-		return (0);
-	game->mini_map.img.addr = mlx_get_data_addr(game->mini_map.img.mlx_img,
-			&game->mini_map.img.bits_per_pixels,
-			&game->mini_map.img.line_len,
-			&game->mini_map.img.endian);
+	img->addr = mlx_get_data_addr(img->mlx_img,
+			&img->bits_per_pixels,
+			&img->line_len,
+			&img->endian);
 	return (1);
 }
 

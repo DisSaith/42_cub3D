@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rendering.c                                        :+:      :+:    :+:   */
+/*   rendering_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 11:50:36 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 17:06:18 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 /*
  *	[FILE DESCRIPTION]
@@ -18,11 +18,9 @@
  *	
  *	void			my_mlx_pixel_put(t_img *img, int x, int y, 
  *									unsigned int pixel);
- *	void			draw_sprite(t_game *game, t_img *sprite, 
- *								int pos_x, int pos_y);
  *	void			draw_column(t_game *game, t_raycasting *ray, int x);
- *	void			raycasting(t_game *game)
- *	int				rendering(t_game *game);
+ *	void			raycasting_b(t_game *game)
+ *	int				rendering_b(t_game *game);
  */
 
 /*
@@ -36,30 +34,6 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, unsigned int pixel)
 		return ;
 	dst = img->addr + (y * img->line_len + x * (img->bits_per_pixels / 8));
 	*(unsigned int *)dst = pixel;
-}
-
-/*
- * Draw a sprite (loaded before) at x and y positions in the buffer image
- */
-void	draw_sprite(t_game *game, t_img *sprite, int pos_x, int pos_y)
-{
-	unsigned int	pixel;
-	int				x;
-	int				y;
-
-	y = 0;
-	while (y < sprite->height)
-	{
-		x = 0;
-		while (x < sprite->width)
-		{
-			pixel = get_pixel_from_img(sprite, x, y);
-			if (pixel != TRANSPARENT)
-				my_mlx_pixel_put(&game->buffer, x + pos_x, y + pos_y, pixel);
-			x++;
-		}
-		y++;
-	}
 }
 
 /*
@@ -98,7 +72,7 @@ void	draw_column(t_game *game, t_raycasting *ray, t_column *column, int x)
  * Cast a ray in each column of the FOV player and calculate the distance
  * between the player and walls to determine what to display in 3D
  */
-void	raycasting(t_game *game)
+void	raycasting_b(t_game *game)
 {
 	t_raycasting	ray;
 	t_column		column;
@@ -111,7 +85,7 @@ void	raycasting(t_game *game)
 		initialize_ray1(game, &ray);
 		initialize_ray2(&ray);
 		perform_dda_algorithme(game, &ray);
-		calculate_what_to_display(game, &ray, &column, mini_map);
+		calculate_what_to_display_b(game, &ray, &column, mini_map);
 		draw_line_minimap(game);
 		draw_column(game, &ray, &column, ray.x);
 		ray.x++;
@@ -121,15 +95,17 @@ void	raycasting(t_game *game)
 /*
  * Rendering each frame (associate with mlx_loop_hook)
  */
-int	rendering(t_game *game)
+int	rendering_b(t_game *game)
 {
+	mlx_mouse_get_pos(game->mlx, game->window,
+		&game->player.mouse_x, &game->player.mouse_y);
 	ft_bzero(game->buffer.addr,
 		game->buffer.line_len * game->buffer.height);
 	ft_bzero(game->mini_map.img.addr,
 		game->mini_map.img.line_len * game->mini_map.img.height);
-	move_player(game);
+	move_player_b(game);
 	draw_minimap(game);
-	raycasting(game);
+	raycasting_b(game);
 	mlx_put_image_to_window(game->mlx, game->window,
 		game->buffer.mlx_img, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->window,

@@ -7,8 +7,11 @@ _(piscine of september's 2025 - 42 PARIS)_
 
 
 <ins>starting date</ins> : 04/05/2026  
-<ins>last update</ins> : 05/05/2026  
+<ins>last update</ins> : 20/05/2026  
 
+
+## Mandatory
+MiniLibX does not support Windows and MacOS, only Linux is provided !   
 
 ## Description  
 Cub3D is the second graphic design project (after milestone 2's projects so_long, FdF and fractol) that enables us to improve our skills in window handling, colors, events etc.. with MiniLibX, the 42 school's graphical library.   

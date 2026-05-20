@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_raycasting.c                                 :+:      :+:    :+:   */
+/*   raycasting_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/11 13:15:34 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/19 17:47:38 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 15:23:56 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 /*
  *	[FILE DESCRIPTION]
@@ -21,8 +21,8 @@
  *  void	perform_dda_algorithme(t_game *game, t_raycasting *ray);
  *  void	initialize_column(t_game *game,
  *								t_raycasting *ray, t_column *column);
- *  void	calculate_what_to_display(t_game *game,
- *								t_raycasting *ray, t_column *colum);
+ *  void	calculate_what_to_display_b(t_game *game, t_raycasting *ray,
+ *								t_column *colum, t_mini_map *mini_map);
  */
 
 /*
@@ -144,7 +144,7 @@ void	initialize_column(t_game *game, t_raycasting *ray, t_column *column)
  * and lowest pixels to fill in the current column
  * At the end we calculate the ray to display in the mini_map
  */
-void	calculate_what_to_display(t_game *game, t_raycasting *ray,
+void	calculate_what_to_display_b(t_game *game, t_raycasting *ray,
 			t_column *column, t_mini_map *mini_map)
 {
 	if (ray->side == 0)
