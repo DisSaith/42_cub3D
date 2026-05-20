@@ -6,11 +6,11 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 14:58:30 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/20 11:52:16 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/20 12:40:08 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 /*
  * Free and destroy parsing data
@@ -81,4 +81,35 @@ void	free_game_data(t_game *game)
 		return ;
 	free_parsing_data(game);
 	free_mlx_data(game);
+}
+
+/*
+ *Free, destroy and close everything for no leaks before exit
+ */
+int	close_game(t_game *game)
+{
+	free_parsing_data(game);
+	if (game->buffer.mlx_img)
+		mlx_destroy_image(game->mlx, game->buffer.mlx_img);
+	if (game->mini_map.img.mlx_img)
+		mlx_destroy_image(game->mlx, game->mini_map.img.mlx_img);
+	if (game->textures.north.mlx_img)
+		mlx_destroy_image(game->mlx, game->textures.north.mlx_img);
+	if (game->textures.south.mlx_img)
+		mlx_destroy_image(game->mlx, game->textures.south.mlx_img);
+	if (game->textures.west.mlx_img)
+		mlx_destroy_image(game->mlx, game->textures.west.mlx_img);
+	if (game->textures.east.mlx_img)
+		mlx_destroy_image(game->mlx, game->textures.east.mlx_img);
+	if (game->window)
+	{
+		mlx_destroy_window(game->mlx, game->window);
+		game->window = NULL;
+	}
+	if (game->mlx)
+	{
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+	}
+	exit(0);
 }

@@ -6,7 +6,7 @@
 #    By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/28 17:01:03 by acohaut           #+#    #+#              #
-#    Updated: 2026/05/19 14:21:38 by acohaut          ###   ########.fr        #
+#    Updated: 2026/05/20 12:43:19 by acohaut          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,6 @@ INCLUDES	= -I includes -I./libft
 LIBFT		= libft/libft.a
 
 SRCS		= 	srcs/main.c \
-				srcs/rendering.c \
-				srcs/mini_map.c \
-				srcs/load_textures.c \
-				srcs/key_manager.c \
-				srcs/move_player.c \
-				srcs/utils_cub3d.c \
-				srcs/error.c \
 				srcs/parsing/parsing.c \
 				srcs/parsing/file_parsing.c \
 				srcs/parsing/map_parsing.c \
@@ -32,8 +25,17 @@ SRCS		= 	srcs/main.c \
 				srcs/parsing/rgb_parsing.c \
 				srcs/parsing/player_parsing.c \
 				srcs/parsing/utils_parsing.c \
-				srcs/utils_raycasting.c \
-				srcs/free.c \
+				srcs/rendering/rendering.c \
+				srcs/rendering/mini_map.c \
+				srcs/rendering/load_textures.c \
+				srcs/rendering/raycasting.c \
+				srcs/utilities/utils_cub3d.c \
+				srcs/utilities/free.c \
+				srcs/utilities/error.c \
+				srcs/utilities/initialize_game.c \
+				srcs/utilities/key_manager.c \
+				srcs/utilities/move_player.c \
+
 
 OBJS		= $(SRCS:srcs/%.c=objs/%.o)
 

@@ -6,11 +6,11 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 12:13:11 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/20 11:32:02 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 12:34:13 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 /*
  * Free all data and display error message

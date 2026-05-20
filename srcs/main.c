@@ -6,77 +6,11 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 11:52:29 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/20 12:43:32 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-/*
- *Free, destroy and close everything for no leaks before exit
- */
-int	close_game(t_game *game)
-{
-	free_parsing_data(game);
-	if (game->buffer.mlx_img)
-		mlx_destroy_image(game->mlx, game->buffer.mlx_img);
-	if (game->mini_map.img.mlx_img)
-		mlx_destroy_image(game->mlx, game->mini_map.img.mlx_img);
-	if (game->textures.north.mlx_img)
-		mlx_destroy_image(game->mlx, game->textures.north.mlx_img);
-	if (game->textures.south.mlx_img)
-		mlx_destroy_image(game->mlx, game->textures.south.mlx_img);
-	if (game->textures.west.mlx_img)
-		mlx_destroy_image(game->mlx, game->textures.west.mlx_img);
-	if (game->textures.east.mlx_img)
-		mlx_destroy_image(game->mlx, game->textures.east.mlx_img);
-	if (game->window)
-	{
-		mlx_destroy_window(game->mlx, game->window);
-		game->window = NULL;
-	}
-	if (game->mlx)
-	{
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
-	}
-	exit(0);
-}
-
-/*
- *Initialize player struct position and direction
- */
-void	init_player(t_game *game)
-{
-	game->player.w_press = false;
-	game->player.s_press = false;
-	game->player.d_press = false;
-	game->player.a_press = false;
-	game->player.right_press = false;
-	game->player.left_press = false;
-}
-
-/*
- *Initialize game struct and mlx struct for start the game
- */
-int	initialisation_game(t_game *game)
-{
-	game->mlx = mlx_init();
-	if (!game->mlx)
-		error_exit("mlx init");
-	game->window = mlx_new_window(game->mlx,
-			WIDTH_WINDOW, HEIGHT_WINDOW, "cub3D");
-	if (!game->window)
-		error_exit("mlx window");
-	if (!load_buffer(game))
-		error_exit("loading buffer");
-	if (!load_mini_map(game))
-		error_exit("loading minimap");
-	if (!load_textures(game))
-		error_exit("loading textures");
-	init_player(game);
-	return (1);
-}
 
 /*
  *Main function of the program

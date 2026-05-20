@@ -6,11 +6,11 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 11:08:20 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 12:42:01 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 /*
  *	[FILE DESCRIPTION]
