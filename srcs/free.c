@@ -6,12 +6,15 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 14:58:30 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/19 17:39:01 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 11:31:30 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/*
+ * Free and destroy parsing data
+ */
 void	free_parsing_data(t_game *game)
 {
 	int	i;
@@ -35,6 +38,9 @@ void	free_parsing_data(t_game *game)
 		free(game->textures.path_we);
 }
 
+/*
+ * Free and destroy mlx data
+ */
 void	free_mlx_data(t_game *game)
 {
 	if (game->buffer.mlx_img)
@@ -61,6 +67,9 @@ void	free_mlx_data(t_game *game)
 	}
 }
 
+/*
+ * Call all functions to free and clean data
+ */
 void	free_game_data(t_game *game)
 {
 	if (!game)

@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/19 17:47:02 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 11:39:06 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
  * Every function used for the mini map:
  *	
  *	void	initialize_line(t_game *game, t_line *line);
+ *	void	draw_line_minimap(t_game *game);
  *	void	draw_player_square(t_game *game,
  *				t_mini_map *mini_map, unsigned int color);
  *	void	draw_a_block(t_game *game,
@@ -44,6 +45,9 @@ void	initialize_line(t_game *game, t_line *line)
 	line->error_tmp = 0;
 }
 
+/*
+ *
+ */
 void	draw_line_minimap(t_game *game)
 {
 	t_line	line;

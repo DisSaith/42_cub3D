@@ -6,12 +6,15 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 12:13:11 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/18 16:00:58 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/20 11:32:02 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/*
+ * Free all data and display error message
+ */
 void	error_exit(char *error_message)
 {
 	size_t	n;
