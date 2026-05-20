@@ -6,7 +6,7 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:54:28 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/18 14:54:54 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/20 16:26:33 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	check_texture_file_extension(char *filename)
 		error_exit("Invalid texture file name");
 	len = back_space(filename);
 	if (len < 5 || ft_strncmp(filename + len - 4, ".xpm", 4) != 0)
-		error_exit("Invalid texture file extention");
+		error_exit("Invalid texture file extension (must be .xpm)");
 }
 
 void	check_texture_file_existence(char *path)
@@ -44,14 +44,14 @@ void	check_texture_file_existence(char *path)
 	len = back_space(&path[x]);
 	filename = malloc(sizeof(char) * (len + 1));
 	if (!filename)
-		error_exit("Malloc");
+		error_exit("Memory allocation failed for texture path");
 	ft_strncpy(filename, &path[x], len);
 	filename[len] = '\0';
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
-		close(fd);
-		error_exit("Texture file not found!");
+		free(filename);
+		error_exit("Texture file could not be opened or found");
 	}
 	close(fd);
 	free(filename);
@@ -69,7 +69,7 @@ void	fill_textures_filename(t_textures *textures, char *str, char *id)
 	end = back_space(str);
 	filename = malloc(sizeof(char) * (end - start + 1));
 	if (!filename)
-		error_exit("Malloc");
+		error_exit("Memory allocation failed for texture path");
 	ft_strncpy(filename, &str[start], (end - start));
 	filename[end - start] = '\0';
 	if (ft_strncmp(id, "NO", 3) == 0)

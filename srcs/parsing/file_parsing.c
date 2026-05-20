@@ -6,7 +6,7 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 15:31:34 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/19 17:44:48 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 16:01:06 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	check_file_existence(t_file *file)
 	file->fd = open(file->filename, O_RDONLY);
 	if (file->fd == -1)
 	{
-		close(file->fd);
 		error_exit("File not found!");
 	}
 }
@@ -40,7 +39,7 @@ void	get_file_height(t_file *file)
 
 	fd = open(file->filename, O_RDONLY);
 	if (fd < 0)
-		error_exit("Open");
+		error_exit("Failed to open the file");
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -76,7 +75,7 @@ void	check_file_content(t_game *game, t_file *file, t_textures *textures)
 	get_map_dimensions(file);
 	check_map_content(game, file);
 	if (!check_map_closed(file))
-		error_exit("La map n'est pas fermee par des murs !");
+		error_exit("Map is not properly enclosed by walls");
 	replace_spaces_with_walls(file);
 }
 

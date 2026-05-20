@@ -6,7 +6,7 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 13:47:04 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/20 11:50:44 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/20 16:21:22 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	replace_spaces_with_walls(t_file *file)
 	{
 		new_line = malloc(sizeof(char) * (file->width + 1));
 		if (!new_line)
-			error_exit("Malloc de la map rectangulaire échoué");
+			error_exit("Memory allocation failed for rectangular map");
 		ft_memset(new_line, '1', file->width);
 		new_line[file->width] = '\0';
 		x = 0;
@@ -53,8 +53,8 @@ void	replace_spaces_with_walls(t_file *file)
 				new_line[x] = file->map[y][x];
 			x++;
 		}
-		file->map[y] = new_line;
-		y++;
+		free(file->map[y]);
+		file->map[y++] = new_line;
 	}
 }
 
@@ -66,7 +66,7 @@ void	convert_file_to_tab(t_file *file)
 	i = 0;
 	file->file_content = malloc(sizeof(char *) * (file->height + 1));
 	if (!file->file_content)
-		error_exit("Malloc");
+		error_exit("Memory allocation failed for file content");
 	while (i < file->height)
 	{
 		file->file_content[i] = get_next_line(file->fd);
@@ -97,7 +97,7 @@ void	init_file(t_file *file, char *filename)
 size_t	check_file(t_file *file, t_textures *textures, int argc, char *filename)
 {
 	if (argc != 2)
-		error_exit("Invalid arguments");
+		error_exit("Invalid number of arguments. Usage: ./cub3D <map.cub>");
 	check_file_extension(filename);
 	init_file(file, filename);
 	check_file_existence(file);

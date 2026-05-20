@@ -6,7 +6,7 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 13:38:26 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/19 15:06:51 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/20 16:28:05 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ void	convert_map_to_tab(t_file *file, size_t height)
 	i = 0;
 	file->map = malloc(sizeof(char *) * (file->height - height + 1));
 	if (!file->map)
-		error_exit("Malloc");
+		error_exit("Memory allocation failed for map array");
 	while (height < file->height)
 	{
-		file->map[i] = file->file_content[height];
+		file->map[i] = ft_strdup(file->file_content[height]);
+		if (!file->map[i])
+			error_exit("Memory allocation failed for map line duplication");
 		height++;
 		i++;
 	}
@@ -100,7 +102,7 @@ void	check_map_content(t_game *game, t_file *file)
 		while (file->map[y][x] != '\n' && file->map[y][x] != '\0')
 		{
 			if (!check_map_element(file, x, y))
-				error_exit("fichier map pas bon!");
+				error_exit("Invalid character found in the map");
 			else if (file->map[y][x] == 'N' || file->map[y][x] == 'S'
 					|| file->map[y][x] == 'W' || file->map[y][x] == 'E')
 			{
@@ -113,5 +115,5 @@ void	check_map_content(t_game *game, t_file *file)
 		y++;
 	}
 	if (file->player_count != 1)
-		error_exit("Erreur : il doit y avoir exactement 1 joueur (N, S, W, E)");
+		error_exit("Map must contain exactly one player starting position");
 }

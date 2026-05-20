@@ -6,17 +6,17 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:59:18 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/20 12:18:15 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/20 16:27:30 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-size_t	check_rgb_range(int r, int g, int b)
+size_t	check_rgb_range(int *rgb)
 {
-	if ((r < 0 || r > 255)
-		|| (g < 0 || g > 255)
-		|| (b < 0 || b > 255))
+	if ((rgb[0] < 0 || rgb[0] > 255)
+		|| (rgb[1] < 0 || rgb[1] > 255)
+		|| (rgb[2] < 0 || rgb[2] > 255))
 		return (0);
 	return (1);
 }
@@ -24,28 +24,29 @@ size_t	check_rgb_range(int r, int g, int b)
 void	fill_rgb(t_textures *textures, char *str, char *id)
 {
 	size_t	start;
-	int		r;
-	int		g;
-	int		b;
+	int		rgb[3];
 
-	start = 0;
-	while (str[start] != '-' && !ft_isdigit(str[start]))
+	start = (skip_space(str) + 1);
+	start += (skip_space(&str[start]));
+	if (str[start] != '-' && !ft_isdigit(str[start]))
+		error_exit("Invalid character found in RGB format");
+	rgb[0] = ft_atoi_cub3d(&str[start]);
+	while (str[start++] != ',')
+		;
+	rgb[1] = ft_atoi_cub3d(&str[start]);
+	while (str[start++] != ',')
+		;
+	rgb[2] = ft_atoi_cub3d(&str[start]);
+	if (!check_rgb_range(rgb))
+		error_exit("RGB values must be strictly between 0 and 255");
+	while (ft_isdigit(str[start]))
 		start++;
-	r = ft_atoi_cub3d(&str[start]);
-	while (str[start] != ',')
-		start++;
-	start++;
-	g = ft_atoi_cub3d(&str[start]);
-	while (str[start] != ',')
-		start++;
-	start++;
-	b = ft_atoi_cub3d(&str[start]);
-	if (!check_rgb_range(r, g, b))
-		error_exit("Wrong rgb range");
+	if (!ft_isspace(str[start]))
+		error_exit("Trailing garbage characters found after RGB values");
 	if (ft_strncmp(id, "F", 2) == 0)
-		textures->floor = create_trgb(0, r, g, b);
+		textures->floor = create_trgb(0, rgb[0], rgb[1], rgb[2]);
 	else
-		textures->ceiling = create_trgb(0, r, g, b);
+		textures->ceiling = create_trgb(0, rgb[0], rgb[1], rgb[2]);
 }
 
 size_t	check_rgb(t_file *file, t_textures *textures, size_t y, size_t x)
@@ -61,5 +62,5 @@ size_t	check_rgb(t_file *file, t_textures *textures, size_t y, size_t x)
 		return (file->c = 1, 0);
 	}
 	else
-		return (error_exit("Map file content is incorrect."), 0);
+		return (error_exit("Unknown element identifier found in file"), 0);
 }

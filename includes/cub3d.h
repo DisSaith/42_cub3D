@@ -221,7 +221,7 @@ void			fill_textures_filename(t_textures *textures,
 					char *str, char *id);
 
 /**********rgb_parsing.c***********/
-size_t			check_rgb_range(int r, int g, int b);
+size_t			check_rgb_range(int *rgb);
 size_t			check_rgb(t_file *file, t_textures *textures,
 					size_t y, size_t x);
 void			fill_rgb(t_textures *textures, char *str, char *id);
