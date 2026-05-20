@@ -91,7 +91,7 @@ int	main(int argc, char **argv)
 	check_file(&game.file, &game.textures, argc, argv[1]);
 	initialisation_game(&game);
 	for (int y = 0 ; game.file.map[y] ; y++)
-		printf("%s", game.file.map[y]);
+		printf("%s\n", game.file.map[y]);
 	mlx_hook(game.window, 2, 1 << 0, (int (*)())(void *)key_press, &game);
 	mlx_hook(game.window, 3, 1 << 1, (int (*)())(void *)key_release, &game);
 	mlx_hook(game.window, 17, 1 << 0, (int (*)())(void *)close_game, &game);
