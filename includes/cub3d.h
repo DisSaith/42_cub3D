@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 17:35:58 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/21 11:44:01 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,8 +210,7 @@ void			check_texture_file_existence(char *path);
 void			check_texture_file_extension(char *filename);
 void			fill_textures_filename(t_textures *textures,
 					char *str, char *id);
-
-/**********rgb_parsing.c***********/
+//rgb_parsing.c
 size_t			check_rgb_range(int *rgb);
 size_t			check_rgb(t_file *file, t_textures *textures,
 					size_t y, size_t x);
@@ -312,7 +311,12 @@ void			error_exit_b(char *error_message);
 int				key_press_b(int keycode, t_game *game);
 int				key_release_b(int keycode, t_game *game);
 //move_player_bonus.c
-void			rotate_fov_b(t_game *game, double rotation);
+void			rotate_left_b(t_game *game, double rotation,
+					double old_dir_x, double old_plan_x);
+void			rotate_right_b(t_game *game, double rotation,
+					double old_dir_x, double old_plan_x);
+void			rotate_fov_b(t_game *game, double rotation,
+					double old_dir_x, double old_plan_x);
 void			move_player_b(t_game *game);
 
 #endif

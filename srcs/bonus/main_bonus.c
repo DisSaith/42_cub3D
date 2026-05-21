@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 17:23:39 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/21 11:22:47 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	main(int argc, char **argv)
 	game.file.game = &game;
 	check_file(&game.file, &game.textures, argc, argv[1]);
 	initialisation_game_b(&game);
-	mlx_mouse_hide(game.mlx, game.window);
 	mlx_hook(game.window, 2, 1 << 0, (int (*)())(void *)key_press_b, &game);
 	mlx_hook(game.window, 3, 1 << 1, (int (*)())(void *)key_release_b, &game);
 	mlx_hook(game.window, 17, 1 << 0, (int (*)())(void *)close_game_b, &game);

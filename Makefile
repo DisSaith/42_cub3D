@@ -6,7 +6,7 @@
 #    By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/28 17:01:03 by acohaut           #+#    #+#              #
-#    Updated: 2026/05/20 16:58:58 by acohaut          ###   ########.fr        #
+#    Updated: 2026/05/21 11:14:49 by acohaut          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,7 @@ $(NAME):	$(LIBFT) $(OBJS)
 
 bonus:	$(LIBFT) $(OBJS_BONUS)
 		make -C mlx_linux
-		$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME_BONUS)
+		$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lXfixes -lm -lz -o $(NAME_BONUS)
 
 clean:
 		rm -rf objs/

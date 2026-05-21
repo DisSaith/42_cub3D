@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 17:22:24 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/21 11:23:21 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	initialisation_game_b(t_game *game)
 			WIDTH_WINDOW, HEIGHT_WINDOW, "cub3D");
 	if (!game->window)
 		error_exit_b("mlx window");
+	mlx_mouse_hide(game->mlx, game->window);
 	if (!load_img(game, &game->buffer, WIDTH_WINDOW, HEIGHT_WINDOW))
 		error_exit_b("loading buffer");
 	if (!load_img(game, &game->mini_map.img, 160, 160))

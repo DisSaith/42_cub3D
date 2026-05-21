@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:57:47 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/20 17:25:46 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/21 11:42:10 by acohaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,47 +16,63 @@
  *	[FILE DESCRIPTION]
  * Function needed to move player :
  *
+ * void	rotate_left_b(t_game *game, double rotation,
+ *						double old_dir_x, double old_plan_x);
+ * void	rotate_right_b(t_game *game, double rotation,
+ *						double old_dir_x, double old_plan_x);
+ * void	rotate_fov_b(t_game *game, double rotation,
+ *						double old_dir_x, double old_plan_x);
  * void	move_player_b(t_game *game);
  */
 
 /*
+ * Left rotation if mouse move on left
+ */
+void	rotate_left_b(t_game *game, double rotation,
+			double old_dir_x, double old_plan_x)
+{
+	game->player.dir_x = old_dir_x * cos(-rotation)
+		- game->player.dir_y * sin(-rotation);
+	game->player.dir_y = old_dir_x * sin(-rotation)
+		+ game->player.dir_y * cos(-rotation);
+	game->player.plan_x = old_plan_x * cos(-rotation)
+		- game->player.plan_y * sin(-rotation);
+	game->player.plan_y = old_plan_x * sin(-rotation)
+		+ game->player.plan_y * cos(-rotation);
+}
+
+/*
+ * Right rotation if mouse move on right
+ */
+void	rotate_right_b(t_game *game, double rotation,
+			double old_dir_x, double old_plan_x)
+{
+	game->player.dir_x = old_dir_x * cos(rotation)
+		- game->player.dir_y * sin(rotation);
+	game->player.dir_y = old_dir_x * sin(rotation)
+		+ game->player.dir_y * cos(rotation);
+	game->player.plan_x = old_plan_x * cos(rotation)
+		- game->player.plan_y * sin(rotation);
+	game->player.plan_y = old_plan_x * sin(rotation)
+		+ game->player.plan_y * cos(rotation);
+}
+
+/*
  * Horizontal rotation if LEFT or RIGHT key are pressed
  */
-void	rotate_fov_b(t_game *game, double rotation)
+void	rotate_fov_b(t_game *game, double rotation,
+			double old_dir_x, double old_plan_x)
 {
-	double	old_dir_x;
-	double	old_plan_x;
 	double	delta_x;
 	int		new_mouse_x;
 
-	mlx_mouse_get_pos(game->mlx, game->window, &new_mouse_x, &game->player.mouse_y);
+	mlx_mouse_get_pos(game->mlx, game->window,
+		&new_mouse_x, &game->player.mouse_y);
 	delta_x = new_mouse_x - game->player.mouse_x;
-	old_dir_x = game->player.dir_x;
-	old_plan_x = game->player.plan_x;
 	if (delta_x < 0 && game->player.shift_r_press == false)
-	{
-		game->player.dir_x = old_dir_x * cos(-rotation)
-			- game->player.dir_y * sin(-rotation);
-		game->player.dir_y = old_dir_x * sin(-rotation)
-			+ game->player.dir_y * cos(-rotation);
-		game->player.plan_x = old_plan_x * cos(-rotation)
-			- game->player.plan_y * sin(-rotation);
-		game->player.plan_y = old_plan_x * sin(-rotation)
-			+ game->player.plan_y * cos(-rotation);
-	}
+		rotate_left_b(game, rotation, old_dir_x, old_plan_x);
 	else if (delta_x > 0 && game->player.shift_r_press == false)
-	{
-		game->player.dir_x = old_dir_x * cos(rotation)
-			- game->player.dir_y * sin(rotation);
-		game->player.dir_y = old_dir_x * sin(rotation)
-			+ game->player.dir_y * cos(rotation);
-		game->player.plan_x = old_plan_x * cos(rotation)
-			- game->player.plan_y * sin(rotation);
-		game->player.plan_y = old_plan_x * sin(rotation)
-			+ game->player.plan_y * cos(rotation);
-	}
-	if (game->player.shift_r_press == false)
-		mlx_mouse_move(game->mlx, game->window, WIDTH_WINDOW/2, HEIGHT_WINDOW/2);
+		rotate_right_b(game, rotation, old_dir_x, old_plan_x);
 }
 
 /*
@@ -69,9 +85,8 @@ void	move_player_b(t_game *game)
 	double	rotation;
 
 	speed = 5.0;
-	rotation = 0.05;
-	rotate_fov_b(game, rotation);
-	//rotate_fov(game, rotation, game->player.dir_x, game->player.plan_x);
+	rotation = 0.08;
+	rotate_fov_b(game, rotation, game->player.dir_x, game->player.plan_x);
 	move_vertical(game, speed);
 	move_horizontal(game, speed);
 }
