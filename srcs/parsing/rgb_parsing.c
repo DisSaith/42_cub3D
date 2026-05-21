@@ -6,7 +6,7 @@
 /*   By: nofelten <nofelten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:59:18 by nofelten          #+#    #+#             */
-/*   Updated: 2026/05/20 16:27:30 by nofelten         ###   ########.fr       */
+/*   Updated: 2026/05/21 13:54:26 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	fill_rgb(t_textures *textures, char *str, char *id)
 	if (str[start] != '-' && !ft_isdigit(str[start]))
 		error_exit("Invalid character found in RGB format");
 	rgb[0] = ft_atoi_cub3d(&str[start]);
-	while (str[start++] != ',')
-		;
+	if ((!check_rgb_intruder(str, &start)))
+		error_exit("RGB values must be strictly between 0 and 255");
 	rgb[1] = ft_atoi_cub3d(&str[start]);
-	while (str[start++] != ',')
-		;
+	if ((!check_rgb_intruder(str, &start)))
+		error_exit("RGB values must be strictly between 0 and 255");
 	rgb[2] = ft_atoi_cub3d(&str[start]);
 	if (!check_rgb_range(rgb))
 		error_exit("RGB values must be strictly between 0 and 255");
@@ -47,6 +47,18 @@ void	fill_rgb(t_textures *textures, char *str, char *id)
 		textures->floor = create_trgb(0, rgb[0], rgb[1], rgb[2]);
 	else
 		textures->ceiling = create_trgb(0, rgb[0], rgb[1], rgb[2]);
+}
+
+size_t	check_rgb_intruder(char *str, size_t *start)
+{
+	while (ft_isdigit(str[(*start)]))
+		(*start)++;
+	if (str[(*start)] == ',')
+	{
+		(*start)++;
+		return (1);
+	}
+	return (0);
 }
 
 size_t	check_rgb(t_file *file, t_textures *textures, size_t y, size_t x)

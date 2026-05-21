@@ -6,7 +6,7 @@
 /*   By: acohaut <acohaut@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 16:59:22 by acohaut           #+#    #+#             */
-/*   Updated: 2026/05/21 11:44:01 by acohaut          ###   ########.fr       */
+/*   Updated: 2026/05/21 13:51:08 by nofelten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ void			fill_textures_filename(t_textures *textures,
 size_t			check_rgb_range(int *rgb);
 size_t			check_rgb(t_file *file, t_textures *textures,
 					size_t y, size_t x);
+size_t			check_rgb_intruder(char *str, size_t *start);
 void			fill_rgb(t_textures *textures, char *str, char *id);
 //player_parsing.c
 void			check_player_position(t_game *game, size_t x, size_t y);

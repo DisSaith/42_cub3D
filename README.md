@@ -7,7 +7,7 @@ _(piscine of september's 2025 - 42 PARIS)_
 
 
 <ins>starting date</ins> : 04/05/2026  
-<ins>last update</ins> : 20/05/2026  
+<ins>last update</ins> : 21/05/2026  
 
 
 ## Mandatory
@@ -23,12 +23,23 @@ Skills learning / improvement :
 - ray casting (algorithm for simulating 3 dimensions)
 - basic video game concepts
 
+## Bonus
+We added for the bonus section :
+- Wall collisions
+- A minimap system
+- Rotate point of view with the mouse
+
 ## Instructions  
 ***Usage***  
 1) make all
 2) ./cub3D "map_name".cub
 3) play with our game and try common requirements   
-   
+
+***Bonus***
+1) make bonus
+2) ./cub3D_bonus "map_name".cub
+3) try bonus addons
+
 ***Check leaks***   
 valgrind --leak-check=full --show-leak-kinds=all ./cub3D "map_name".cub   
 
